@@ -3,16 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/f5"
     tools:context=".Huffman">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
-        android:layout_height="496dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:padding="160dp"
-        android:text="LZW" />
 </FrameLayout>
