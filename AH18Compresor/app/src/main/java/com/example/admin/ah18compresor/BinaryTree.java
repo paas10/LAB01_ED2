@@ -4,9 +4,9 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class BinaryTree<T> implements Comparator<T>{
+public class BinaryTree<T>{
 
-        public Node<T> nRoot;
+     /*   public Node<T> nRoot;
         int iElements;
 
         public BinaryTree()
@@ -285,6 +285,6 @@ public class BinaryTree<T> implements Comparator<T>{
 
             return "Error";
 
-        }
+        }*/
 
 }
