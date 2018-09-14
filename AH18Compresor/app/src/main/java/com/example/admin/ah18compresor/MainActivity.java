@@ -1,5 +1,6 @@
 package com.example.admin.ah18compresor;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -80,12 +81,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
+
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            fragmentManager.beginTransaction().replace(R.id.contenedor, new Huffman()).commit();
         } else if (id == R.id.nav_gallery) {
-
+            fragmentManager.beginTransaction().replace(R.id.contenedor, new LZW()).commit();
         } else if (id == R.id.nav_slideshow) {
-
+            fragmentManager.beginTransaction().replace(R.id.contenedor, new Bitacora()).commit();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {

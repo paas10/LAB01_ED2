@@ -8,13 +8,11 @@
     <!-- TODO: Update blank fragment layout -->
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editText2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="496dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:padding="300px"
-        android:selectAllOnFocus="false"
-        android:singleLine="false"
-        android:text="Huffman" />
+        android:padding="160dp"
+        android:text="LZW" />
 </FrameLayout>
