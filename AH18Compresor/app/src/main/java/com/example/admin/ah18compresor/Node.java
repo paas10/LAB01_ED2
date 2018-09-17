@@ -1,27 +1,27 @@
 package com.example.admin.ah18compresor;
 
-public class Node<T> {
-
-    public T value;
-    public Node<T> left;
-    public Node<T> right;
-
-    public Node(T Valor, Node<T> left, Node<T> right)
-    {
-        this.value = Valor;
-        this.left = left;
-        this.right = right;
+public class Node
+{
+    public int getNumero() {
+        return Numero;
     }
 
-    public boolean isLeaf()
-    {
-            if (right == null && left == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+    public void setNumero(int numero) {
+        Numero = numero;
     }
+
+    public char getCaracter() {
+        return Caracter;
+    }
+
+    public void setCaracter(char caracter) {
+        Caracter = caracter;
+    }
+
+    private int Numero;
+    private char Caracter;
+
+    Node left = null;
+    Node right = null;
+
 }
