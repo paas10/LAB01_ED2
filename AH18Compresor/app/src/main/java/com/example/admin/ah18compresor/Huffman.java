@@ -23,7 +23,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import java.util.List;
 
 
@@ -42,7 +43,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
         View view = inflater.inflate(R.layout.fragment_huffman, container, false);
 
         CarpetaActual = (TextView) view.findViewById(R.id.RutaActual);
-        Lista = (ListView) view.findViewById(R.id.Lista);
+        Lista = (ListView) view.findViewById(R.id.ListaVista);
 
         DirectorioRaiz = Environment.getExternalStorageDirectory().getPath();
         Lista.setOnItemClickListener(this);
@@ -91,7 +92,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
             RutasArchivos.add(rutadirectorio);
         }
 
-        Adaptador = new ArrayAdapter<String>(getActivity(),R.layout.fragment_huffman,NombresArchivos);
+        Adaptador = new ArrayAdapter<String>(getActivity(),R.layout.fragment_huffman,R.id.RutaActual,NombresArchivos);
         Lista.setAdapter(Adaptador);
     }
 
@@ -102,11 +103,44 @@ public class Huffman extends Fragment implements OnItemClickListener {
         File archivo = new File(RutasArchivos.get(i));
         if(archivo.isFile())
         {
-            Toast.makeText(getActivity(), "Has Seleccionado El Archivo: "+archivo.getName(),Toast.LENGTH_SHORT).show();
+            if (archivo.getName().endsWith(".txt"))
+            {
+                AlertDialog.Builder Dialogo = new AlertDialog.Builder(getActivity());
+                Dialogo.setTitle("Importante");
+                Dialogo.setMessage("¿Desea Aplicar El Metodo de Compresión Huffman a este Archivo?");
+                Dialogo.setCancelable(false);
+                Dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo, int id) {
+                        ConfirmarHuffman();
+                    }
+                });
+                Dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        CancelarHuffman();
+                    }
+                });
+                Dialogo.show();
+
+            }
+            else
+            {
+                Toast.makeText(getActivity(), "Has Seleccionado El Archivo: "+archivo.getName(),Toast.LENGTH_SHORT).show();
+            }
+
         }
         else
         {
             VerDirectorio(RutasArchivos.get(i));
         }
+    }
+
+    public void ConfirmarHuffman() {
+
+        Toast t=Toast.makeText(getActivity(),"Dentro de un momento tu Archivo habrá sido compreso y se mostrará", Toast.LENGTH_SHORT);
+        t.show();
+    }
+
+    public void CancelarHuffman() {
+        Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();
     }
 }
