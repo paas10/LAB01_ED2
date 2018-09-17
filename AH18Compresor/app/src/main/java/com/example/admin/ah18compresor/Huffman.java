@@ -135,12 +135,90 @@ public class Huffman extends Fragment implements OnItemClickListener {
     }
 
     public void ConfirmarHuffman() {
-
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento tu Archivo habrá sido compreso y se mostrará", Toast.LENGTH_SHORT);
         t.show();
     }
 
     public void CancelarHuffman() {
         Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    // Retorna una tabla con cada caracter y sus repeticiones en el texto.
+    public estrucutura[] obtenerCaracteresRepeticiones (String texto)
+    {
+        char[] fragmentado = texto.toCharArray();
+
+        int cont = fragmentado.length;
+        char [] Filtro = new char[cont];
+
+        // Ciclo exteriror recorre la cadena de caracteres completa
+        // Ciclo interior unicamente registra los datos nuevos (1 vez cada caracter)
+        for(int a = 0; a < cont; a++)
+        {
+            int b = 0;
+            boolean Existe = false;
+            while(Filtro[b] != '\0')
+            {
+                if(Filtro[b] == fragmentado[a])
+                {
+                    Existe = true;
+                    break;
+                }
+                b++;
+            }
+
+            if(Existe == false)
+                Filtro[b] = fragmentado[a];
+        }
+
+        // HASTA EL MOMENTO SE COLOCARON TODOS LOS CARACTERES EN UNA CADENA DE CHAR.
+
+        int cantCaracteres = Filtro.length;
+
+        estrucutura[] tabla = new estrucutura[cantCaracteres];
+
+        for (int i = 0; i < cantCaracteres; i++)
+        {
+            tabla[i].setCaracter(Filtro[i]);
+            char symbol = tabla[i].getCaracter();
+
+            int contador = 0;
+            for (int n = 0; n < cont; n++)
+            {
+                if (fragmentado[n] == symbol)
+                    contador++;
+            }
+
+            tabla[i].setRepeticiones(contador);
+        }
+
+        // YA SE CREÓ LA TABLA CON LA CANTIDAD DE REPETICIONES DE CADA CARACTER
+
+        return tabla;
+    }
+
+
+    public class estrucutura
+    {
+        public char getCaracter() {
+            return caracter;
+        }
+
+        public void setCaracter(char caracter) {
+            this.caracter = caracter;
+        }
+
+        public int getRepeticiones() {
+            return repeticiones;
+        }
+
+        public void setRepeticiones(int repeticiones) {
+            this.repeticiones = repeticiones;
+        }
+
+        char caracter;
+        int repeticiones;
     }
 }

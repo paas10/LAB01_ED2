@@ -25,6 +25,8 @@ public class BinaryTree
 
     public Node Insertar (Node n1, Node n2)
     {
+        nRaiz = null;
+
         if(n1.getNumero() <= n2.getNumero())
         {
             return insertar(n1, n2);
