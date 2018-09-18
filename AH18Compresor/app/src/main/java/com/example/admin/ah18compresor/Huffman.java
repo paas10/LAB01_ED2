@@ -3,13 +3,16 @@ package com.example.admin.ah18compresor;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import java.util.List;
+import java.util.Queue;
 
 
 public class Huffman extends Fragment implements OnItemClickListener {
@@ -136,6 +140,109 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
     public void ConfirmarHuffman() {
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento tu Archivo habrá sido compreso y se mostrará", Toast.LENGTH_SHORT);
+
+        String Texto = "Tres tristes tigres tragan trigo en un trigal";
+
+        Queue<Node> Caracteres = new Queue<Node>() {
+            @Override
+            public boolean add(Node node) {
+                return false;
+            }
+
+            @Override
+            public boolean offer(Node node) {
+                return false;
+            }
+
+            @Override
+            public Node remove() {
+                return null;
+            }
+
+            @Override
+            public Node poll() {
+                return null;
+            }
+
+            @Override
+            public Node element() {
+                return null;
+            }
+
+            @Override
+            public Node peek() {
+                return null;
+            }
+
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public boolean contains(Object o) {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<Node> iterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(@NonNull T[] a) {
+                return null;
+            }
+
+            @Override
+            public boolean remove(Object o) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(@NonNull Collection<? extends Node> c) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+
+            }
+        };
+
+        Caracteres = obtenerCaracteresRepeticiones(Texto);
+
+
+
+
         t.show();
     }
 
@@ -144,9 +251,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
     }
 
 
-
     // Retorna una tabla con cada caracter y sus repeticiones en el texto.
-    public estrucutura[] obtenerCaracteresRepeticiones (String texto)
+    public Queue<Node> obtenerCaracteresRepeticiones (String texto)
     {
         char[] fragmentado = texto.toCharArray();
 
@@ -177,7 +283,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         int cantCaracteres = Filtro.length;
 
-        estrucutura[] tabla = new estrucutura[cantCaracteres];
+        Node[] tabla = new Node[cantCaracteres];
 
         for (int i = 0; i < cantCaracteres; i++)
         {
@@ -191,34 +297,129 @@ public class Huffman extends Fragment implements OnItemClickListener {
                     contador++;
             }
 
-            tabla[i].setRepeticiones(contador);
+            tabla[i].setNumero(contador);
         }
 
         // YA SE CREÓ LA TABLA CON LA CANTIDAD DE REPETICIONES DE CADA CARACTER
 
-        return tabla;
-    }
+        Queue<Node> tablaOrdenada;
+        tablaOrdenada = new Queue<Node>() {
+            @Override
+            public boolean add(Node node) {
+                return false;
+            }
 
+            @Override
+            public boolean offer(Node node) {
+                return false;
+            }
 
-    public class estrucutura
-    {
-        public char getCaracter() {
-            return caracter;
+            @Override
+            public Node remove() {
+                return null;
+            }
+
+            @Override
+            public Node poll() {
+                return null;
+            }
+
+            @Override
+            public Node element() {
+                return null;
+            }
+
+            @Override
+            public Node peek() {
+                return null;
+            }
+
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public boolean contains(Object o) {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<Node> iterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(@NonNull T[] a) {
+                return null;
+            }
+
+            @Override
+            public boolean remove(Object o) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(@NonNull Collection<? extends Node> c) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+
+            }
+        };
+
+        for (int n = 0; n < cantCaracteres; n++)
+        {
+            int posicionMenor = 0;
+
+            for (int a = 0; a < cantCaracteres; a++)
+            {
+                int menor = 1000000;
+
+                if (tabla[a].getNumero() < 0)
+                    break;
+
+                if (tabla[a].getNumero() < menor)
+                {
+                    menor = tabla[a].getNumero();
+                    posicionMenor = a;
+                }
+            }
+
+            tablaOrdenada.add(tabla[posicionMenor]);
+            tabla[posicionMenor].setNumero(-1);
         }
 
-        public void setCaracter(char caracter) {
-            this.caracter = caracter;
-        }
-
-        public int getRepeticiones() {
-            return repeticiones;
-        }
-
-        public void setRepeticiones(int repeticiones) {
-            this.repeticiones = repeticiones;
-        }
-
-        char caracter;
-        int repeticiones;
+        return tablaOrdenada;
     }
 }
