@@ -15,8 +15,11 @@
         <TextView
             android:id="@+id/RutaActual"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ruta Actual" />
+            android:layout_height="18dp"
+            android:background="@color/colorAccent"
+            android:text="Ruta Actual"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/ListaVista"

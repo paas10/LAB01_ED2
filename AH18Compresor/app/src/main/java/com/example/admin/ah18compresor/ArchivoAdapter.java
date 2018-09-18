@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class ArchivoAdapter extends BaseAdapter {
 
     protected Activity activity;
-    protected ArrayList<File> items;
+    protected ArrayList<String> items;
 
-    public ArchivoAdapter(Activity activity, ArrayList<File> items) {
+    public ArchivoAdapter(Activity activity, ArrayList<String> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -55,10 +55,10 @@ public class ArchivoAdapter extends BaseAdapter {
             v = inf.inflate(R.layout.formato, null);
         }
 
-        File dir = items.get(position);
+        String dir = items.get(position);
 
         TextView Nombre = (TextView) v.findViewById(R.id.Nombre);
-        Nombre.setText(dir.getName());
+        Nombre.setText(dir);
 
         return v;
     }

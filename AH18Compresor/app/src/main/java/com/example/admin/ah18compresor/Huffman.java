@@ -7,7 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -92,15 +97,43 @@ public class Huffman extends Fragment implements OnItemClickListener {
             RutasArchivos.add(rutadirectorio);
         }
 
-        Adaptador = new ArrayAdapter<String>(getActivity(),R.layout.fragment_huffman,R.id.RutaActual,NombresArchivos);
+        //Adaptador = new ArrayAdapter<String>(getActivity(),R.layout.fragment_huffman,R.id.RutaActual,NombresArchivos);
+        final ArchivoAdapter Adaptador = new ArchivoAdapter(getActivity(), (ArrayList<String>) NombresArchivos);
         Lista.setAdapter(Adaptador);
     }
 
+    private void LeerArchivo (File Archivo)
+    {
+        if(Archivo.exists()==true)
+        {
+            FileReader LecturaArchivo;
+            try {
+                LecturaArchivo = new FileReader(Archivo);
+                BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
+                String Linea="";
+                Linea = LeerArchivo.readLine();
+                while(Linea != null)
+                {
+                    Linea=LeerArchivo.readLine();
+                }
+                LecturaArchivo.close();
+                LeerArchivo.close();
+                //Enviar Linea a donde se vaya a ejecutar Huffmanf
+
+                } catch (IOException e) {
+                Toast.makeText(getActivity(), "ERROR El Archivo no se puede Leer!",Toast.LENGTH_SHORT).show();
+                }
+        }
+        else
+        {
+            Toast.makeText(getActivity(), "ERROR El Archivo no Existe!",Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        File archivo = new File(RutasArchivos.get(i));
+        final File archivo = new File(RutasArchivos.get(i));
         if(archivo.isFile())
         {
             if (archivo.getName().endsWith(".txt"))
@@ -111,7 +144,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 Dialogo.setCancelable(false);
                 Dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo, int id) {
-                        ConfirmarHuffman();
+                        ConfirmarHuffman(archivo);
                     }
                 });
                 Dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -134,9 +167,10 @@ public class Huffman extends Fragment implements OnItemClickListener {
         }
     }
 
-    public void ConfirmarHuffman() {
-        Toast t=Toast.makeText(getActivity(),"Dentro de un momento tu Archivo habrá sido compreso y se mostrará", Toast.LENGTH_SHORT);
+    public void ConfirmarHuffman(File Archivo) {
+        Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
         t.show();
+        //De aqui hay que enviar el Archivo a las otras Funciones.
     }
 
     public void CancelarHuffman() {
