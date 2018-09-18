@@ -171,12 +171,15 @@ public class Huffman extends Fragment implements OnItemClickListener {
         }
     }
 
-<<<<<<< HEAD
-    public void ConfirmarHuffman() {
-        Toast t=Toast.makeText(getActivity(),"Dentro de un momento tu Archivo habrá sido compreso y se mostrará", Toast.LENGTH_SHORT);
 
-        String Texto = "Tres tristes tigres tragan trigo en un trigal";
 
+    public void ConfirmarHuffman(File Archivo) {
+        Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
+        t.show();
+
+        //De aqui hay que enviar el Archivo a las otras Funciones.
+
+        String Texto = "Tres tristes tigres";
         Queue<Node> Caracteres = new Queue<Node>() {
             @Override
             public boolean add(Node node) {
@@ -273,16 +276,6 @@ public class Huffman extends Fragment implements OnItemClickListener {
         };
 
         Caracteres = obtenerCaracteresRepeticiones(Texto);
-
-
-
-
-=======
-    public void ConfirmarHuffman(File Archivo) {
-        Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
->>>>>>> 78fd465db3ff523dbfc1db1e6d69084c2764cdbb
-        t.show();
-        //De aqui hay que enviar el Archivo a las otras Funciones.
     }
 
     public void CancelarHuffman() {
@@ -461,4 +454,5 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         return tablaOrdenada;
     }
+
 }
