@@ -1,9 +1,16 @@
 package com.example.admin.ah18compresor;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.net.LinkAddress;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +39,8 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import java.util.List;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 
 
 public class Huffman extends Fragment implements OnItemClickListener {
@@ -103,8 +112,9 @@ public class Huffman extends Fragment implements OnItemClickListener {
         Lista.setAdapter(Adaptador);
     }
 
-    private void LeerArchivo (File Archivo)
+    private String LeerArchivo (File Archivo)
     {
+        String Texto = "";
         if(Archivo.exists()==true)
         {
             FileReader LecturaArchivo;
@@ -115,12 +125,13 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 Linea = LeerArchivo.readLine();
                 while(Linea != null)
                 {
-                    Linea=LeerArchivo.readLine();
+                    Texto = Linea;
+                    Linea= LeerArchivo.readLine();
                 }
                 LecturaArchivo.close();
                 LeerArchivo.close();
-                //Enviar Linea a donde se vaya a ejecutar Huffmanf
 
+                return Texto;
             } catch (IOException e) {
                 Toast.makeText(getActivity(), "ERROR El Archivo no se puede Leer!",Toast.LENGTH_SHORT).show();
             }
@@ -129,6 +140,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
         {
             Toast.makeText(getActivity(), "ERROR El Archivo no Existe!",Toast.LENGTH_SHORT).show();
         }
+
+        return "-1";
     }
 
     @Override
@@ -171,10 +184,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
     public void ConfirmarHuffman(File Archivo) {
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
         t.show();
-        //De aqui hay que enviar el Archivo a las otras Funciones.
-
         String Texto = "Tres tristes tigres";
-
         LinkedList<Node> Caracteres = new LinkedList<>();
 
         Caracteres = ObtenerCaracteresRepeticiones(Texto);
@@ -182,14 +192,13 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
     }
 
+
+
+
     public void CancelarHuffman() {
         Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 7118c8392c7819d4ffbe3247eb444aa00d5ef8e2
     // Retorna una tabla con cada caracter y sus repeticiones en el texto.
     public LinkedList<Node> ObtenerCaracteresRepeticiones (String texto)
     {
