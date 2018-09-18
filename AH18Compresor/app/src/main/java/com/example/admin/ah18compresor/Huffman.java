@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
@@ -120,9 +121,9 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 LeerArchivo.close();
                 //Enviar Linea a donde se vaya a ejecutar Huffmanf
 
-                } catch (IOException e) {
+            } catch (IOException e) {
                 Toast.makeText(getActivity(), "ERROR El Archivo no se puede Leer!",Toast.LENGTH_SHORT).show();
-                }
+            }
         }
         else
         {
@@ -171,15 +172,26 @@ public class Huffman extends Fragment implements OnItemClickListener {
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
         t.show();
         //De aqui hay que enviar el Archivo a las otras Funciones.
+
+        String Texto = "Tres tristes tigres";
+
+        LinkedList<Node> Caracteres = new LinkedList<>();
+
+        Caracteres = ObtenerCaracteresRepeticiones(Texto);
+
+
     }
 
     public void CancelarHuffman() {
         Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7118c8392c7819d4ffbe3247eb444aa00d5ef8e2
     // Retorna una tabla con cada caracter y sus repeticiones en el texto.
-    public estrucutura[] obtenerCaracteresRepeticiones (String texto)
+    public LinkedList<Node> ObtenerCaracteresRepeticiones (String texto)
     {
         char[] fragmentado = texto.toCharArray();
 
@@ -208,9 +220,12 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         // HASTA EL MOMENTO SE COLOCARON TODOS LOS CARACTERES EN UNA CADENA DE CHAR.
 
-        int cantCaracteres = Filtro.length;
+        int cantCaracteres = 0;
 
-        estrucutura[] tabla = new estrucutura[cantCaracteres];
+        while(Filtro[cantCaracteres] != '\0')
+            cantCaracteres++;
+
+        Node[] tabla = new Node[cantCaracteres];
 
         for (int i = 0; i < cantCaracteres; i++)
         {
@@ -224,35 +239,37 @@ public class Huffman extends Fragment implements OnItemClickListener {
                     contador++;
             }
 
-            tabla[i].setRepeticiones(contador);
+            tabla[i].setNumero(contador);
         }
 
         // YA SE CREÓ LA TABLA CON LA CANTIDAD DE REPETICIONES DE CADA CARACTER
 
-        return tabla;
-    }
+        LinkedList<Node> tablaOrdenada = new LinkedList<>();
 
 
-    public class estrucutura
-    {
-        public char getCaracter() {
-            return caracter;
+        for (int n = 0; n < cantCaracteres; n++)
+        {
+            int posicionMenor = 0;
+
+            for (int a = 0; a < cantCaracteres; a++)
+            {
+                int menor = 1000000;
+
+                if (tabla[a].getNumero() < 0)
+                    break;
+
+                if (tabla[a].getNumero() < menor)
+                {
+                    menor = tabla[a].getNumero();
+                    posicionMenor = a;
+                }
+            }
+
+            tablaOrdenada.offer(tabla[posicionMenor]);
+            tabla[posicionMenor].setNumero(-1);
         }
 
-        public void setCaracter(char caracter) {
-            this.caracter = caracter;
-        }
-
-        public int getRepeticiones() {
-            return repeticiones;
-        }
-
-        public void setRepeticiones(int repeticiones) {
-            this.repeticiones = repeticiones;
-        }
-
-        char caracter;
-        int repeticiones;
+        return tablaOrdenada;
     }
 
 }
