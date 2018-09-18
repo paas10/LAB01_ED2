@@ -178,7 +178,6 @@ public class Huffman extends Fragment implements OnItemClickListener {
     }
 
 
-
     // Retorna una tabla con cada caracter y sus repeticiones en el texto.
     public estrucutura[] obtenerCaracteresRepeticiones (String texto)
     {
@@ -255,4 +254,5 @@ public class Huffman extends Fragment implements OnItemClickListener {
         char caracter;
         int repeticiones;
     }
+
 }
