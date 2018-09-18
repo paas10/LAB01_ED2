@@ -13,9 +13,8 @@
             android:id="@+id/Nombre"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="-2dp"
-            android:layout_toRightOf="@+id/Imagen"
             android:text="Titulo Frase"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#dc7700ff"
@@ -34,7 +33,7 @@
             android:cropToPadding="false"
             android:maxHeight="35dp"
             android:maxWidth="74dp"
-            android:src="@drawable/archivito" />
+            android:src="@drawable/archivov" />
 
     </RelativeLayout>
 
