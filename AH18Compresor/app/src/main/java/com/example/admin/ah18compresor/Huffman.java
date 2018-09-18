@@ -3,7 +3,6 @@ package com.example.admin.ah18compresor;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
@@ -34,7 +32,6 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import java.util.List;
-import java.util.Queue;
 
 
 public class Huffman extends Fragment implements OnItemClickListener {
@@ -124,9 +121,9 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 LeerArchivo.close();
                 //Enviar Linea a donde se vaya a ejecutar Huffmanf
 
-                } catch (IOException e) {
+            } catch (IOException e) {
                 Toast.makeText(getActivity(), "ERROR El Archivo no se puede Leer!",Toast.LENGTH_SHORT).show();
-                }
+            }
         }
         else
         {
@@ -171,120 +168,26 @@ public class Huffman extends Fragment implements OnItemClickListener {
         }
     }
 
-
-
     public void ConfirmarHuffman(File Archivo) {
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
         t.show();
-
         //De aqui hay que enviar el Archivo a las otras Funciones.
 
         String Texto = "Tres tristes tigres";
-        Queue<Node> Caracteres = new Queue<Node>() {
-            @Override
-            public boolean add(Node node) {
-                return false;
-            }
 
-            @Override
-            public boolean offer(Node node) {
-                return false;
-            }
+        LinkedList<Node> Caracteres = new LinkedList<>();
 
-            @Override
-            public Node remove() {
-                return null;
-            }
+        Caracteres = ObtenerCaracteresRepeticiones(Texto);
 
-            @Override
-            public Node poll() {
-                return null;
-            }
 
-            @Override
-            public Node element() {
-                return null;
-            }
-
-            @Override
-            public Node peek() {
-                return null;
-            }
-
-            @Override
-            public int size() {
-                return 0;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Object o) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Iterator<Node> iterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
-
-            @NonNull
-            @Override
-            public <T> T[] toArray(@NonNull T[] a) {
-                return null;
-            }
-
-            @Override
-            public boolean remove(Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(@NonNull Collection<? extends Node> c) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-        };
-
-        Caracteres = obtenerCaracteresRepeticiones(Texto);
     }
 
     public void CancelarHuffman() {
         Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();
     }
 
-
     // Retorna una tabla con cada caracter y sus repeticiones en el texto.
-    public Queue<Node> obtenerCaracteresRepeticiones (String texto)
+    public LinkedList<Node> ObtenerCaracteresRepeticiones (String texto)
     {
         char[] fragmentado = texto.toCharArray();
 
@@ -313,7 +216,10 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         // HASTA EL MOMENTO SE COLOCARON TODOS LOS CARACTERES EN UNA CADENA DE CHAR.
 
-        int cantCaracteres = Filtro.length;
+        int cantCaracteres = 0;
+
+        while(Filtro[cantCaracteres] != '\0')
+            cantCaracteres++;
 
         Node[] tabla = new Node[cantCaracteres];
 
@@ -334,101 +240,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         // YA SE CREÓ LA TABLA CON LA CANTIDAD DE REPETICIONES DE CADA CARACTER
 
-        Queue<Node> tablaOrdenada;
-        tablaOrdenada = new Queue<Node>() {
-            @Override
-            public boolean add(Node node) {
-                return false;
-            }
+        LinkedList<Node> tablaOrdenada = new LinkedList<>();
 
-            @Override
-            public boolean offer(Node node) {
-                return false;
-            }
-
-            @Override
-            public Node remove() {
-                return null;
-            }
-
-            @Override
-            public Node poll() {
-                return null;
-            }
-
-            @Override
-            public Node element() {
-                return null;
-            }
-
-            @Override
-            public Node peek() {
-                return null;
-            }
-
-            @Override
-            public int size() {
-                return 0;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Object o) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Iterator<Node> iterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
-
-            @NonNull
-            @Override
-            public <T> T[] toArray(@NonNull T[] a) {
-                return null;
-            }
-
-            @Override
-            public boolean remove(Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(@NonNull Collection<? extends Node> c) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-        };
 
         for (int n = 0; n < cantCaracteres; n++)
         {
@@ -448,11 +261,10 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 }
             }
 
-            tablaOrdenada.add(tabla[posicionMenor]);
+            tablaOrdenada.offer(tabla[posicionMenor]);
             tabla[posicionMenor].setNumero(-1);
         }
 
         return tablaOrdenada;
     }
-
 }
