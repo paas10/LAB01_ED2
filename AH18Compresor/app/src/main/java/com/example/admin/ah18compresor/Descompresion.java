@@ -102,7 +102,6 @@ public class Descompresion extends Fragment {
 
         int contCaracter = 2;
         int contRepeticion = 4;
-
         while (texto[contRepeticion] != '/' && texto[contCaracter] != '/')
         {
             Node nuevo = new Node();
@@ -110,7 +109,7 @@ public class Descompresion extends Fragment {
 
             int aux = contRepeticion;
             String num = "";
-            while (texto[aux] != '_')
+            while (texto[aux] != '_' && texto[aux] != '/')
             {
                 num += Character.toString(texto[aux]);
                 aux++;
@@ -119,6 +118,11 @@ public class Descompresion extends Fragment {
             nuevo.setNumero(Integer.parseInt(num));
 
             Caracteres.offer(nuevo);
+
+            contCaracter = aux + 1;
+
+            if (texto[aux] == '/')
+                break;
 
             contCaracter = aux + 1;
             contRepeticion = contCaracter + 2;
@@ -163,14 +167,11 @@ public class Descompresion extends Fragment {
         // Hasta el momento la tabla con las codificaciones
 
 
-        // Le sumo otro para dejar atras la diagnoal y tomar en cuenta el primer caracter compreso.
-        contRepeticion++;
-
-        int [] numeros = new int[texto.length-contRepeticion];
+        int [] numeros = new int[texto.length-contCaracter];
         int cont = 0;
-        for (int a = contRepeticion; a < texto.length; a++)
+        for (int a = contCaracter; a < texto.length; a++)
         {
-            numeros[cont] = Integer.parseInt(Character.toString(texto[a]));
+            numeros[cont] = texto[a];
             cont++;
         }
 
@@ -180,7 +181,30 @@ public class Descompresion extends Fragment {
             binario[a] = Integer.toString(numeros[a]);
         }
 
+        String ResultanteCerosUnos = "";
+        for (String numbers : binario)
+        {
+            ResultanteCerosUnos += numbers;
+        }
 
+        // Guardo todos los posibles conbinacines de ceros y unos.
+        String[] PosiblesCodificaciones = new String[tabla.length];
+        int n = 0;
+        for (Estructura celda : tabla)
+        {
+            PosiblesCodificaciones[n] = celda.getCod();
+        }
+
+
+        //YO ME HABIA EQUIVOCADO, AHORITA LO QUE HAY QUE HACER ES CONVERTIR EL STRING RESULTANTECEROSUNOS A UN charArray(); PARA
+        //IR SACANDO CARACTER POR CARACTER, EN CADA ITERACION SE TIENE QUE VERIFICAR SI LA CADENA CONCATENADA EXISTE EN LA CADENA DE
+        //STRING POSIBLESCODIFICACIONES, si existe en la cadena hay que ir a buscar a tabla para extraer el respectivo caracter.
+
+        char[] Binario = ResultanteCerosUnos.toCharArray();
+
+
+
+        // ESTE ES UN EJEMPLO DE COMO IR A BUSCAR A TABLA EL CODIGO BINARIO PARA EXTRAER EL CARACTER CORRESPONDIENTE.
         for (String numbers : binario)
         {
             boolean encontrado = false;
@@ -196,8 +220,6 @@ public class Descompresion extends Fragment {
                 conta++;
             }
         }
-
-
 
         return "";
     }
