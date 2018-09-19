@@ -26,14 +26,16 @@ public class Descompresion extends Fragment {
     TextView Texto;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_descompresion, container, false);
 
         Texto = (TextView) view.findViewById(R.id.txtResultado);
         String ArchivoLeido = LeerArchivo();
         Texto.setText(ArchivoLeido);
+
+        String ArchivoDescompreso = "";
+        ArchivoDescompreso = descompresión("");
 
         return view;
     }
