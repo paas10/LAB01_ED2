@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
 
 
 public class Descompresion extends Fragment {
@@ -41,6 +42,7 @@ public class Descompresion extends Fragment {
     {
         Ruta = ruta;
     }
+
     public String LeerArchivo()
     {
         File Archivo = new File(Ruta);
@@ -74,4 +76,135 @@ public class Descompresion extends Fragment {
 
         return "-1";
     }
+
+    public String descompresión(String Texto)
+    {
+        char[] texto = Texto.toCharArray();
+
+        StringBuilder CerosUnos = new StringBuilder();
+
+        LinkedList<Node> Caracteres = new LinkedList<>();
+
+        int contCaracter = 0;
+        int contRepeticion = 1;
+        while (texto[contRepeticion] != '/')
+        {
+            Node nuevo = new Node();
+            nuevo.setCaracter(texto[contCaracter]);
+            nuevo.setNumero(texto[contRepeticion]);
+
+            Caracteres.offer(nuevo);
+
+            contCaracter++;
+            contRepeticion++;
+        }
+
+        // HASTA ACÁ HE METIDO TODOS LOS CARACTERES CON SUS REPETICIONES A Caracteres
+
+        Procesos procesos = new Procesos();
+        BinaryTree Arbol = new BinaryTree();
+
+        do{
+            Node n1 = new Node();
+            Node n2 = new Node();
+
+            n1 = Caracteres.poll();
+            n2 = Caracteres.poll();
+
+            Caracteres.offer(Arbol.Insertar(n1, n2));
+
+            Caracteres = procesos.OrdenarLinkedList(Caracteres);
+
+        }while(Caracteres.size() != 1);
+
+        // SE HA CREADO EL ARBOL
+
+        Node raiz = new Node();
+        raiz = Caracteres.poll();
+        String rutas = "";
+
+        InOrdenEscritura(raiz, rutas);
+
+        Arbol.InOrdenEscritura(raiz);
+
+        Estructura [] tabla = new Estructura[Arbol.Tabla.size()];
+        int contador = 0;
+
+        while(Arbol.Tabla.size() != 0)
+        {
+            tabla[contador] = Arbol.Tabla.poll();
+            contador++;
+        }
+        // Hasta el momento la tabla con las codificaciones
+
+
+        // Le sumo otro para dejar atras la diagnoal y tomar en cuenta el primer caracter compreso.
+        contRepeticion++;
+
+        int [] numeros = new int[texto.length-contRepeticion];
+        int cont = 0;
+        for (int a = contRepeticion; a < texto.length; a++)
+        {
+            numeros[cont] = Integer.parseInt(Character.toString(texto[a]));
+        }
+
+        String[] binario = new String[numeros.length];
+        for (int a = 0; a < numeros.length; a++)
+        {
+            binario[a] = Integer.toString(numeros[a]);
+        }
+
+
+        for (String numbers : binario)
+        {
+            boolean encontrado = false;
+
+            int conta = 0;
+            while (encontrado != true)
+            {
+                if(numbers == tabla[conta].getCod())
+                {
+                    CerosUnos.append(tabla[conta].getCaracter());
+                    encontrado = true;
+                }
+                conta++;
+            }
+        }
+
+
+
+
+
+        return "";
+    }
+
+    private void InOrdenEscritura (Node nodoAuxiliar, String codi)
+    {
+        if (nodoAuxiliar != null)
+        {
+            if(nodoAuxiliar.isLeaf() == true)
+                nodoAuxiliar.coding = codi;
+
+            InOrdenEscritura(nodoAuxiliar.left, codi + "0");
+            InOrdenEscritura(nodoAuxiliar.right, codi + "1");
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

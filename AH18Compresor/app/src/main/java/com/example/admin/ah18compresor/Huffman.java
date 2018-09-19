@@ -169,8 +169,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
         t.show();
 
-        String tetsto = LeerArchivo(Archivo);
-        String Texto = "Tres tristes tigres";
+        String Texto = LeerArchivo(Archivo);
+        //String Texto = "Tres tristes tigres";
 
         StringBuilder CodArchivo = new StringBuilder();
         StringBuilder CerosUnos = new StringBuilder();
@@ -238,6 +238,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 cont++;
             }
         }
+
         String Variable = CerosUnos.toString();
         CodArchivo.append(Codificar(Variable));
     }
