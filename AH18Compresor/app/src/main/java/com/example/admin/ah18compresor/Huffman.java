@@ -189,7 +189,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         for (Node i : Caracteres)
         {
-            CodArchivo.append(Character.toString(i.getCaracter())+i.getNumero());
+            CodArchivo.append(Character.toString(i.getCaracter())+"_"+i.getNumero()+"_");
         }
 
         CodArchivo.append("/");
@@ -447,7 +447,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 try {
                     FileWriter Escribir = new FileWriter(Archivo, true);
                     BufferedWriter bw = new BufferedWriter(Escribir);
-                    bw.write(CerosAgregados+Cadena.toString());
+                    bw.write(CerosAgregados+"|"+Cadena.toString());
                     bw.close();
                     Escribir.close();
                     Descompresion Envio = new Descompresion();
