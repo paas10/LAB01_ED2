@@ -21,7 +21,6 @@ import java.util.LinkedList;
 
 public class Descompresion extends Fragment {
 
-
     static String Ruta;
     TextView Texto;
 
@@ -113,7 +112,7 @@ public class Descompresion extends Fragment {
             String num = "";
             while (texto[aux] != '_')
             {
-                num = Character.toString(texto[aux]);
+                num += Character.toString(texto[aux]);
                 aux++;
             }
 
