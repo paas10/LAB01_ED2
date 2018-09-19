@@ -34,8 +34,8 @@ public class Descompresion extends Fragment {
         String ArchivoLeido = LeerArchivo();
         Texto.setText(ArchivoLeido);
 
-        String ArchivoDescompreso = "";
-        ArchivoDescompreso = descompresión(ArchivoLeido);
+        /*String ArchivoDescompreso = "";
+        ArchivoDescompreso = descompresión(ArchivoLeido);*/
 
         return view;
     }
