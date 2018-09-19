@@ -33,8 +33,8 @@ public class Descompresion extends Fragment {
         String ArchivoLeido = LeerArchivo();
         Texto.setText(ArchivoLeido);
 
-        /*String ArchivoDescompreso = "";
-        ArchivoDescompreso = descompresión(ArchivoLeido);*/
+        String ArchivoDescompreso = "";
+        ArchivoDescompreso = descompresión(ArchivoLeido);
 
         return view;
     }
@@ -171,6 +171,7 @@ public class Descompresion extends Fragment {
         for (int a = contRepeticion; a < texto.length; a++)
         {
             numeros[cont] = Integer.parseInt(Character.toString(texto[a]));
+            cont++;
         }
 
         String[] binario = new String[numeros.length];
