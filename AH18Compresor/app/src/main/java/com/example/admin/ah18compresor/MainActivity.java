@@ -1,7 +1,12 @@
 package com.example.admin.ah18compresor;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -13,10 +18,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    String Ruta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +67,73 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
+        final int id = item.getItemId();
+        android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
         //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
-            return true;
+
+            final Huffman ExtraerDatos = new Huffman();
+            List<String> Lista = ExtraerDatos.EnviarNombres();
+
+                final String[] ListaNombres = new String[Lista.size()];
+                int contador = 0;
+                for(String i: Lista)
+                {
+                    ListaNombres[contador]= i;
+                    contador++;
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Selecciona la Ruta para Guardar tus Compresiones");
+
+                int checkedItem = 1; // cow
+                builder.setSingleChoiceItems(ListaNombres, checkedItem, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // user checked an item
+                    }
+                });
+
+                    builder.setItems(ListaNombres,
+                    new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int item)
+                        {
+                            Toast.makeText(getApplicationContext(),"Has Elegido Guardar tus Compresiones en: " + ListaNombres[item], Toast.LENGTH_SHORT).show();
+                            ExtraerDatos.RecibirRuta(ListaNombres[item]);
+                            Ruta = ListaNombres[item];
+                        }
+                    });
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", null);
+
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+        } else if (id == R.id.MisCompresiones)
+        {
+            Toast.makeText(getApplicationContext(),"Fragment en Construccion",Toast.LENGTH_LONG).show();
+        }
+        else if (id == R.id.Descompresion)
+        {
+            if(Ruta == null)
+            {
+                Toast.makeText(getApplicationContext(),"No Hay Ningun Archivo Para Mostrar Aún",Toast.LENGTH_LONG).show();
+            }
+            else {
+                Descompresion EnviodeDatos = new Descompresion();
+                EnviodeDatos.RecibirRuta(Ruta);
+                fragmentManager.beginTransaction().replace(R.id.contenedor, new Descompresion()).commit();
+            }
         }
 
         return super.onOptionsItemSelected(item);

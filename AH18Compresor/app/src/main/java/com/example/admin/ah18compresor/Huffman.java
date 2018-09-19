@@ -1,7 +1,5 @@
 package com.example.admin.ah18compresor;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,19 +8,14 @@ import android.view.ViewGroup;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
+
 import android.os.Environment;
-import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -31,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import java.util.List;
 
 
 public class Huffman extends Fragment implements OnItemClickListener {
@@ -103,8 +95,9 @@ public class Huffman extends Fragment implements OnItemClickListener {
         Lista.setAdapter(Adaptador);
     }
 
-    private void LeerArchivo (File Archivo)
+    private String LeerArchivo (File Archivo)
     {
+        String Texto = "";
         if(Archivo.exists()==true)
         {
             FileReader LecturaArchivo;
@@ -115,12 +108,13 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 Linea = LeerArchivo.readLine();
                 while(Linea != null)
                 {
-                    Linea=LeerArchivo.readLine();
+                    Texto = Linea;
+                    Linea= LeerArchivo.readLine();
                 }
                 LecturaArchivo.close();
                 LeerArchivo.close();
-                //Enviar Linea a donde se vaya a ejecutar Huffmanf
 
+                return Texto;
             } catch (IOException e) {
                 Toast.makeText(getActivity(), "ERROR El Archivo no se puede Leer!",Toast.LENGTH_SHORT).show();
             }
@@ -129,6 +123,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
         {
             Toast.makeText(getActivity(), "ERROR El Archivo no Existe!",Toast.LENGTH_SHORT).show();
         }
+
+        return "-1";
     }
 
     @Override
@@ -171,12 +167,14 @@ public class Huffman extends Fragment implements OnItemClickListener {
     public void ConfirmarHuffman(File Archivo) {
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
         t.show();
-        //De aqui hay que enviar el Archivo a las otras Funciones.
-
         String Texto = "Tres tristes tigres";
+<<<<<<< HEAD
 
         StringBuilder CodArchivo = new StringBuilder();
         StringBuilder CerosUnos = new StringBuilder();
+=======
+        LinkedList<Node> Caracteres = new LinkedList<>();
+>>>>>>> a10bb03ca79503533a25a08fe823fbc721da2859
 
         LinkedList<Node> Caracteres = new LinkedList<>();
         Caracteres = ObtenerCaracteresRepeticiones(Texto);
@@ -243,6 +241,112 @@ public class Huffman extends Fragment implements OnItemClickListener {
         }
     }
 
+<<<<<<< HEAD
+=======
+    private static String Codificar(String Texto)
+    {
+        List<String> ListadeBytes = new ArrayList<>();
+        List<Character> ListadeBytesChar = new ArrayList<>();
+        String Byte = "";
+        char [] Cadena = Texto.toCharArray();
+        int ContadorExterno = 0;
+        int ContadorInterno = 0;
+        int CantidadDeCaracteres = Cadena.length;
+
+        while(ContadorExterno != Cadena.length)
+        {
+            if(ContadorInterno !=  8)
+            {
+                Byte = Byte + Character.toString(Cadena[ContadorExterno]);
+                ContadorInterno++;
+                ContadorExterno++;
+                if(ContadorExterno == Cadena.length)
+                {
+                    ListadeBytes.add(Byte);
+                }
+
+            }
+            else
+            {
+                ListadeBytes.add(Byte);
+                ContadorInterno = 0;
+                Byte = "";
+            }
+        }
+
+        String Complemento = "";
+        int Posicion = 0;
+        for (String item: ListadeBytes)
+        {
+            if(item.length() != 8)
+            {
+                int caracteres = item.length();
+                int Iteraciones = 8-caracteres;
+                for(int i = 1; i<= Iteraciones;i++)
+                {
+                    Complemento = Complemento + "0";
+                }
+                item = item+Complemento;
+                ListadeBytes.set(Posicion, item);
+            }
+            Posicion++;
+        }
+
+        for (String item: ListadeBytes)
+        {
+            char Char = (char)(Integer.parseInt(item));
+            ListadeBytesChar.add(Char);
+        }
+
+        String ListaRetorno = ListadeBytes.toString();
+
+        return ListaRetorno;
+    }
+
+    public List<String> EnviarNombres()
+    {
+            DirectorioRaiz = Environment.getExternalStorageDirectory().getPath();
+            NombresArchivos = new ArrayList<String>();
+            RutasArchivos = new ArrayList<String>();
+            int count = 0;
+            File directorioactual = new File(DirectorioRaiz);
+            File[] ListadeArchivos = directorioactual.listFiles();
+
+            if (!DirectorioRaiz.equals(DirectorioRaiz)) {
+                NombresArchivos.add("../");
+                RutasArchivos.add(directorioactual.getParent());
+                count = 1;
+            }
+
+            for (File archivo : ListadeArchivos) {
+                RutasArchivos.add(archivo.getPath());
+            }
+
+            Collections.sort(RutasArchivos, String.CASE_INSENSITIVE_ORDER);
+
+            for (int i = count; i < RutasArchivos.size(); i++) {
+                File archivo = new File(RutasArchivos.get(i));
+
+                if (archivo.isFile()) {
+                    NombresArchivos.add(archivo.getName());
+                } else {
+                    NombresArchivos.add("/" + archivo.getName());
+                }
+            }
+
+            if (ListadeArchivos.length < 1) {
+                NombresArchivos.add("No hay ningun archivo");
+                RutasArchivos.add(DirectorioRaiz);
+            }
+
+            return NombresArchivos;
+    }
+
+    public String RecibirRuta(String Ruta)
+    {
+        return Ruta;
+    }
+>>>>>>> a10bb03ca79503533a25a08fe823fbc721da2859
 
     public void CancelarHuffman() {
         Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();

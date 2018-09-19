@@ -4,6 +4,16 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="Seleccionar Ruta"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/MisCompresiones"
+        android:orderInCategory="100"
+        android:title="Mis Compresiones"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/Descompresion"
+        android:orderInCategory="100"
+        android:title="Ver Archivo Descompreso"
+        app:showAsAction="withText" />
 </menu>
