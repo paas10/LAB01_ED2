@@ -443,6 +443,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
                     bw.write(Cadena.toString());
                     bw.close();
                     Escribir.close();
+                    Descompresion Envio = new Descompresion();
+                    Envio.RecibirRuta(Ruta);
                 } catch (IOException ex) {
                     Toast.makeText(getActivity(), "No se Ha podido leer el archivo", Toast.LENGTH_SHORT).show();
                 }

@@ -21,7 +21,7 @@ import java.io.IOException;
 public class Descompresion extends Fragment {
 
 
-    String Ruta;
+    static String Ruta;
     TextView Texto;
 
     @Override
@@ -43,6 +43,13 @@ public class Descompresion extends Fragment {
     }
     public String LeerArchivo()
     {
+
+        if(Ruta == null)
+        {
+            Toast.makeText(getActivity(), "No Hay Ningun Archivo Compreso .Huff para Leer",Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
         File Archivo = new File(Ruta);
 
         String Texto = "";
@@ -71,7 +78,7 @@ public class Descompresion extends Fragment {
         {
             Toast.makeText(getActivity(), "ERROR El Archivo no Existe!",Toast.LENGTH_SHORT).show();
         }
-
+        }
         return "-1";
     }
 }
