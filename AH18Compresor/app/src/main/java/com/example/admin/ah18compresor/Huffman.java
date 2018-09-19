@@ -292,13 +292,12 @@ public class Huffman extends Fragment implements OnItemClickListener {
             Posicion++;
         }
 
+        String ListaRetorno = "";
         for (String item: ListadeBytes)
         {
             char Char = (char)(Integer.parseInt(item));
-            ListadeBytesExportados.add(Char);
+            ListaRetorno = ListaRetorno+Character.toString(Char);
         }
-
-        String ListaRetorno = ListadeBytesExportados.toString();
 
         return ListaRetorno;
     }
