@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,10 +32,13 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
     private List<String> NombresArchivos;
     private List<String> RutasArchivos;
+    private List<String> RutasArchivosNoOrdenados;
     private ArrayAdapter<String> Adaptador;
     private String DirectorioRaiz;
     private TextView CarpetaActual;
     ListView Lista;
+    static String Carpeta;
+    static String ArchivoT;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -169,6 +174,10 @@ public class Huffman extends Fragment implements OnItemClickListener {
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
         t.show();
 
+<<<<<<< HEAD
+=======
+        ArchivoT = Archivo.toString();
+>>>>>>> c014c760c446157fea9cdcd9fa81cd31b7834c7b
         String Texto = LeerArchivo(Archivo);
         //String Texto = "Tres tristes tigres";
 
@@ -240,7 +249,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
         }
 
         String Variable = CerosUnos.toString();
-        CodArchivo.append(Codificar(Variable));
+        StringBuilder Prueba = CodArchivo.append(Codificar(Variable));
+        Escribir(Prueba);
     }
 
 
@@ -322,7 +332,6 @@ public class Huffman extends Fragment implements OnItemClickListener {
             for (File archivo : ListadeArchivos) {
                 RutasArchivos.add(archivo.getPath());
             }
-
             Collections.sort(RutasArchivos, String.CASE_INSENSITIVE_ORDER);
 
             for (int i = count; i < RutasArchivos.size(); i++) {
@@ -343,9 +352,10 @@ public class Huffman extends Fragment implements OnItemClickListener {
             return NombresArchivos;
     }
 
-    public String RecibirRuta(String Ruta)
+    public String RecibirRuta(String carpeta)
     {
-        return Ruta;
+        Carpeta = carpeta;
+        return Carpeta;
     }
 
 
@@ -407,6 +417,40 @@ public class Huffman extends Fragment implements OnItemClickListener {
             InOrdenEscritura(nodoAuxiliar.left, codi + "0");
             InOrdenEscritura(nodoAuxiliar.right, codi + "1");
         }
+    }
+
+    private void Escribir(StringBuilder Cadena)
+    {
+            MainActivity P = new MainActivity();
+            File directorioactual = new File(DirectorioRaiz);
+            File[] ListadeArchivos = directorioactual.listFiles();
+            String Ruta = "";
+            File ArchivoNuevo = new File(ArchivoT);
+            String Formato = "/"+ArchivoNuevo.getName().replace(".txt",".huff");
+
+            if(Carpeta == null)
+            {
+                Toast.makeText(getActivity(), "No hay Ningun Archivo para Escribir Aún", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                for (File item : ListadeArchivos) {
+                    if (item.toString().contains(Carpeta) == true) {
+                        Ruta = item.getAbsolutePath();
+                        Ruta = Ruta + Formato;
+                    }
+                }
+
+                File Archivo = new File(Ruta);
+                try {
+                    FileWriter Escribir = new FileWriter(Archivo, true);
+                    BufferedWriter bw = new BufferedWriter(Escribir);
+                    bw.write(Cadena.toString());
+                    bw.close();
+                    Escribir.close();
+                } catch (IOException ex) {
+                    Toast.makeText(getActivity(), "No se Ha podido leer el archivo", Toast.LENGTH_SHORT).show();
+                }
+            }
     }
 
 }
