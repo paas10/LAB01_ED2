@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity
             }
             else {
                 Descompresion EnviodeDatos = new Descompresion();
-                EnviodeDatos.RecibirRuta(Ruta);
                 fragmentManager.beginTransaction().replace(R.id.contenedor, new Descompresion()).commit();
             }
         }

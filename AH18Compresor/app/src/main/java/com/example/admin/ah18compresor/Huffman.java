@@ -39,6 +39,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
     ListView Lista;
     static String Carpeta;
     static String ArchivoT;
+    static int Caracteres;
+    static int Tamaño;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -262,6 +264,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
         int ContadorExterno = 0;
         int ContadorInterno = 0;
         int CantidadDeCaracteres = Cadena.length;
+        Caracteres = CantidadDeCaracteres;
 
         while(ContadorExterno != Cadena.length)
         {
@@ -286,6 +289,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         String Complemento = "";
         int Posicion = 0;
+        Tamaño = (ListadeBytes.toArray().length*8);
         for (String item: ListadeBytes)
         {
             if(item.length() != 8)
@@ -425,6 +429,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
             String Ruta = "";
             File ArchivoNuevo = new File(ArchivoT);
             String Formato = "/"+ArchivoNuevo.getName().replace(".txt",".huff");
+            int CerosAgregados = Tamaño-Caracteres;
 
             if(Carpeta == null)
             {
@@ -442,9 +447,11 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 try {
                     FileWriter Escribir = new FileWriter(Archivo, true);
                     BufferedWriter bw = new BufferedWriter(Escribir);
-                    bw.write(Cadena.toString());
+                    bw.write(CerosAgregados+Cadena.toString());
                     bw.close();
                     Escribir.close();
+                    Descompresion Envio = new Descompresion();
+                    Envio.RecibirRuta(Ruta);
                 } catch (IOException ex) {
                     Toast.makeText(getActivity(), "No se Ha podido leer el archivo", Toast.LENGTH_SHORT).show();
                 }
