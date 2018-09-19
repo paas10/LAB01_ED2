@@ -246,6 +246,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
     {
         List<String> ListadeBytes = new ArrayList<>();
         List<Character> ListadeBytesChar = new ArrayList<>();
+        List<Character> ListadeBytesExportados = new ArrayList<>();
         String Byte = "";
         char [] Cadena = Texto.toCharArray();
         int ContadorExterno = 0;
@@ -294,10 +295,10 @@ public class Huffman extends Fragment implements OnItemClickListener {
         for (String item: ListadeBytes)
         {
             char Char = (char)(Integer.parseInt(item));
-            ListadeBytesChar.add(Char);
+            ListadeBytesExportados.add(Char);
         }
 
-        String ListaRetorno = ListadeBytes.toString();
+        String ListaRetorno = ListadeBytesExportados.toString();
 
         return ListaRetorno;
     }
