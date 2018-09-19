@@ -20,8 +20,34 @@ public class Node
 
     private int Numero;
     private char Caracter;
+    Node left;
+    Node right;
+    String coding;
 
-    Node left = null;
-    Node right = null;
+    public boolean isLeaf ()
+    {
+        if(left == null && right == null)
+            return true;
+        else
+            return false;
+    }
+
+    public Node()
+    {
+        Numero = 0;
+        Caracter = '\0';
+        left = null;
+        right = null;
+        coding = "";
+    }
+
+    public Node(char caracter, int repeticiones)
+    {
+        Numero = repeticiones;
+        Caracter = caracter;
+        left = null;
+        right = null;
+        coding = "";
+    }
 
 }

@@ -175,12 +175,74 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         String Texto = "Tres tristes tigres";
 
-        LinkedList<Node> Caracteres = new LinkedList<>();
+        StringBuilder CodArchivo = new StringBuilder();
+        StringBuilder CerosUnos = new StringBuilder();
 
+        LinkedList<Node> Caracteres = new LinkedList<>();
         Caracteres = ObtenerCaracteresRepeticiones(Texto);
 
+        for (Node i : Caracteres)
+        {
+            CodArchivo.append(Character.toString(i.getCaracter())+i.getNumero());
+        }
 
+        CodArchivo.append("/");
+
+        //YA TENGO UNICAMENTE LOS CARACTERES CON LAS REPETICIONES
+
+        Procesos procesos = new Procesos();
+        BinaryTree Arbol = new BinaryTree();
+
+        do{
+            Node n1 = new Node();
+            Node n2 = new Node();
+
+            n1 = Caracteres.poll();
+            n2 = Caracteres.poll();
+
+            Caracteres.offer(Arbol.Insertar(n1, n2));
+
+            Caracteres = procesos.OrdenarLinkedList(Caracteres);
+
+        }while(Caracteres.size() != 1);
+
+        // YA SE ARMO EL ARBOL
+
+        Node raiz = new Node();
+        raiz = Caracteres.poll();
+        String rutas = "";
+
+        InOrdenEscritura(raiz, rutas);
+
+        Arbol.InOrdenEscritura(raiz);
+
+        Estructura [] tabla = new Estructura[Arbol.Tabla.size()];
+        int contador = 0;
+
+        while(Arbol.Tabla.size() != 0)
+        {
+            tabla[contador] = Arbol.Tabla.poll();
+            contador++;
+        }
+
+        char [] TextoOriginal = Texto.toCharArray();
+        for (char caracter : TextoOriginal)
+        {
+            boolean encontrado = false;
+
+            int cont = 0;
+            while (encontrado != true)
+            {
+                if(caracter == tabla[cont].getCaracter())
+                {
+                    CerosUnos.append(tabla[cont].getCod());
+                    encontrado = true;
+                }
+                cont++;
+            }
+        }
     }
+
 
     public void CancelarHuffman() {
         Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();
@@ -189,6 +251,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
     // Retorna una tabla con cada caracter y sus repeticiones en el texto.
     public LinkedList<Node> ObtenerCaracteresRepeticiones (String texto)
     {
+        Procesos procesos = new Procesos();
+
         char[] fragmentado = texto.toCharArray();
 
         int cont = fragmentado.length;
@@ -196,38 +260,18 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         // Ciclo exteriror recorre la cadena de caracteres completa
         // Ciclo interior unicamente registra los datos nuevos (1 vez cada caracter)
-        for(int a = 0; a < cont; a++)
-        {
-            int b = 0;
-            boolean Existe = false;
-            while(Filtro[b] != '\0')
-            {
-                if(Filtro[b] == fragmentado[a])
-                {
-                    Existe = true;
-                    break;
-                }
-                b++;
-            }
 
-            if(Existe == false)
-                Filtro[b] = fragmentado[a];
-        }
+        Filtro = procesos.CadenaSinRepeticion(fragmentado);
 
         // HASTA EL MOMENTO SE COLOCARON TODOS LOS CARACTERES EN UNA CADENA DE CHAR.
 
-        int cantCaracteres = 0;
+        int cantCaracteres = Filtro.length;
 
-        while(Filtro[cantCaracteres] != '\0')
-            cantCaracteres++;
-
-        Node[] tabla = new Node[cantCaracteres];
+        LinkedList<Node> tabla = new LinkedList<>();
 
         for (int i = 0; i < cantCaracteres; i++)
         {
-            tabla[i].setCaracter(Filtro[i]);
-            char symbol = tabla[i].getCaracter();
-
+            char symbol = Filtro[i];
             int contador = 0;
             for (int n = 0; n < cont; n++)
             {
@@ -235,36 +279,28 @@ public class Huffman extends Fragment implements OnItemClickListener {
                     contador++;
             }
 
-            tabla[i].setNumero(contador);
+            Node nTemp = new Node(Filtro[i], contador);
+
+            tabla.add(nTemp);
         }
 
         // YA SE CREÓ LA TABLA CON LA CANTIDAD DE REPETICIONES DE CADA CARACTER
 
-        LinkedList<Node> tablaOrdenada = new LinkedList<>();
+        tabla = procesos.OrdenarLinkedList(tabla);
 
-
-        for (int n = 0; n < cantCaracteres; n++)
-        {
-            int posicionMenor = 0;
-
-            for (int a = 0; a < cantCaracteres; a++)
-            {
-                int menor = 1000000;
-
-                if (tabla[a].getNumero() < 0)
-                    break;
-
-                if (tabla[a].getNumero() < menor)
-                {
-                    menor = tabla[a].getNumero();
-                    posicionMenor = a;
-                }
-            }
-
-            tablaOrdenada.offer(tabla[posicionMenor]);
-            tabla[posicionMenor].setNumero(-1);
-        }
-
-        return tablaOrdenada;
+        return tabla;
     }
+
+    private void InOrdenEscritura (Node nodoAuxiliar, String codi)
+    {
+        if (nodoAuxiliar != null)
+        {
+            if(nodoAuxiliar.isLeaf() == true)
+                nodoAuxiliar.coding = codi;
+
+            InOrdenEscritura(nodoAuxiliar.left, codi + "0");
+            InOrdenEscritura(nodoAuxiliar.right, codi + "1");
+        }
+    }
+
 }
