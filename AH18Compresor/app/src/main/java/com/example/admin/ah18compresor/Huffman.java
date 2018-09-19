@@ -175,7 +175,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
     }
 
-    private static void Codificar(String Texto)
+    private static String Codificar(String Texto)
     {
         List<String> ListadeBytes = new ArrayList<>();
         List<Character> ListadeBytesChar = new ArrayList<>();
@@ -230,6 +230,9 @@ public class Huffman extends Fragment implements OnItemClickListener {
             ListadeBytesChar.add(Char);
         }
 
+        String ListaRetorno = ListadeBytes.toString();
+
+        return ListaRetorno;
     }
 
     public List<String> EnviarNombres()

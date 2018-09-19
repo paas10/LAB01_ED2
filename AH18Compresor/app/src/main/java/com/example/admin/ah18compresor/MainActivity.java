@@ -25,6 +25,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    String Ruta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity
         final int id = item.getItemId();
         android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
         //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
 
             final Huffman ExtraerDatos = new Huffman();
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity
                         {
                             Toast.makeText(getApplicationContext(),"Has Elegido Guardar tus Compresiones en: " + ListaNombres[item], Toast.LENGTH_SHORT).show();
                             ExtraerDatos.RecibirRuta(ListaNombres[item]);
+                            Ruta = ListaNombres[item];
                         }
                     });
 
@@ -119,6 +122,18 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.MisCompresiones)
         {
             Toast.makeText(getApplicationContext(),"Fragment en Construccion",Toast.LENGTH_LONG).show();
+        }
+        else if (id == R.id.Descompresion)
+        {
+            if(Ruta == null)
+            {
+                Toast.makeText(getApplicationContext(),"No Hay Ningun Archivo Para Mostrar Aún",Toast.LENGTH_LONG).show();
+            }
+            else {
+                Descompresion EnviodeDatos = new Descompresion();
+                EnviodeDatos.RecibirRuta(Ruta);
+                fragmentManager.beginTransaction().replace(R.id.contenedor, new Descompresion()).commit();
+            }
         }
 
         return super.onOptionsItemSelected(item);

@@ -11,4 +11,9 @@
         android:orderInCategory="100"
         android:title="Mis Compresiones"
         app:showAsAction="withText" />
+    <item
+        android:id="@+id/Descompresion"
+        android:orderInCategory="100"
+        android:title="Ver Archivo Descompreso"
+        app:showAsAction="withText" />
 </menu>
