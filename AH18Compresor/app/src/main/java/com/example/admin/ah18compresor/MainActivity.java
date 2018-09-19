@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.MisCompresiones)
         {
             Toast.makeText(getApplicationContext(),"Fragment en Construccion",Toast.LENGTH_LONG).show();
+            fragmentManager.beginTransaction().replace(R.id.contenedor, new Mis_Compresiones()).commit();
         }
         else if (id == R.id.Descompresion)
         {
