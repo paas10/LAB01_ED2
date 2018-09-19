@@ -177,6 +177,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
         t.show();
 
         ArchivoT = Archivo.toString();
+
         String Texto = LeerArchivo(Archivo);
         //String Texto = "Tres tristes tigres";
 
@@ -246,6 +247,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 cont++;
             }
         }
+
         String Variable = CerosUnos.toString();
         StringBuilder Prueba = CodArchivo.append(Codificar(Variable));
         Escribir(Prueba);
