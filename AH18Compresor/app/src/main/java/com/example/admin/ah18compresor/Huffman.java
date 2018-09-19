@@ -445,11 +445,12 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
                 File Archivo = new File(Ruta);
                 try {
-                    FileWriter Escribir = new FileWriter(Archivo, true);
+                    FileWriter Escribir = new FileWriter(Archivo);
                     BufferedWriter bw = new BufferedWriter(Escribir);
                     bw.write(CerosAgregados+"|"+Cadena.toString());
                     bw.close();
                     Escribir.close();
+                    String Prueba = CerosAgregados+"|"+Cadena.toString();
                     Descompresion Envio = new Descompresion();
                     Envio.RecibirRuta(Ruta);
                 } catch (IOException ex) {
