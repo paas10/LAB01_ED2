@@ -93,19 +93,36 @@ public class Descompresion extends Fragment {
         StringBuilder CerosUnos = new StringBuilder();
 
         LinkedList<Node> Caracteres = new LinkedList<>();
+        int cerosAgregados = texto[0];
 
-        int contCaracter = 0;
-        int contRepeticion = 1;
-        while (texto[contRepeticion] != '/')
+        int flag = 0;
+        while (texto[flag] != '|')
+        {
+            flag++;
+        }
+
+        int contCaracter = 2;
+        int contRepeticion = 4;
+
+        while (texto[contRepeticion] != '/' && texto[contCaracter] != '/')
         {
             Node nuevo = new Node();
             nuevo.setCaracter(texto[contCaracter]);
-            nuevo.setNumero(texto[contRepeticion]);
+
+            int aux = contRepeticion;
+            String num = "";
+            while (texto[aux] != '_')
+            {
+                num = Character.toString(texto[aux]);
+                aux++;
+            }
+
+            nuevo.setNumero(Integer.parseInt(num));
 
             Caracteres.offer(nuevo);
 
-            contCaracter++;
-            contRepeticion++;
+            contCaracter = aux + 1;
+            contRepeticion = contCaracter + 2;
         }
 
         // HASTA ACÁ HE METIDO TODOS LOS CARACTERES CON SUS REPETICIONES A Caracteres
@@ -179,8 +196,6 @@ public class Descompresion extends Fragment {
                 conta++;
             }
         }
-
-
 
 
 
