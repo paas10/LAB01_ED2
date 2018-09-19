@@ -164,17 +164,15 @@ public class Huffman extends Fragment implements OnItemClickListener {
         }
     }
 
+
     public void ConfirmarHuffman(File Archivo) {
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
         t.show();
-        String Texto = "Tres tristes tigres";
-<<<<<<< HEAD
+
+        String Texto = LeerArchivo(Archivo);
 
         StringBuilder CodArchivo = new StringBuilder();
         StringBuilder CerosUnos = new StringBuilder();
-=======
-        LinkedList<Node> Caracteres = new LinkedList<>();
->>>>>>> a10bb03ca79503533a25a08fe823fbc721da2859
 
         LinkedList<Node> Caracteres = new LinkedList<>();
         Caracteres = ObtenerCaracteresRepeticiones(Texto);
@@ -239,10 +237,11 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 cont++;
             }
         }
+        String Variable = CerosUnos.toString();
+        Codificar(Variable);
     }
 
-<<<<<<< HEAD
-=======
+
     private static String Codificar(String Texto)
     {
         List<String> ListadeBytes = new ArrayList<>();
@@ -346,11 +345,12 @@ public class Huffman extends Fragment implements OnItemClickListener {
     {
         return Ruta;
     }
->>>>>>> a10bb03ca79503533a25a08fe823fbc721da2859
+
 
     public void CancelarHuffman() {
         Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();
     }
+
 
     // Retorna una tabla con cada caracter y sus repeticiones en el texto.
     public LinkedList<Node> ObtenerCaracteresRepeticiones (String texto)
