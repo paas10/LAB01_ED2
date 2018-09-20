@@ -92,13 +92,7 @@ public class Descompresion extends Fragment {
         StringBuilder CerosUnos = new StringBuilder();
 
         LinkedList<Node> Caracteres = new LinkedList<>();
-        int cerosAgregados = texto[0];
-
-        int flag = 0;
-        while (texto[flag] != '|')
-        {
-            flag++;
-        }
+        int cerosAgregados = Integer.parseInt(Character.toString(texto[0]));
 
         int contCaracter = 2;
         int contRepeticion = 4;
@@ -166,22 +160,16 @@ public class Descompresion extends Fragment {
         }
         // Hasta el momento la tabla con las codificaciones
 
+        // contCaracter está sobre la diagonal por lo que le sumamos 1
+        contCaracter++;
 
         int [] numeros = new int[texto.length-contCaracter];
         int cont = 0;
-        String NumerodeCeros = "";
         for (int a = contCaracter; a < texto.length; a++)
         {
-            if(Character.toString(texto[a]) != "_")
-            {
-                if(Character.toString(texto[a]).contains("/") == false)
-                {
-                    numeros[cont] = texto[a];
-                    cont++;
-                }
-            }
+            numeros[cont] = texto[a];
+            cont++;
         }
-        NumerodeCeros = Character.toString(texto[0]);
 
         String[] binario = new String[numeros.length];
         for (int a = 0; a < numeros.length; a++)
@@ -189,20 +177,10 @@ public class Descompresion extends Fragment {
                 binario[a] = Integer.toBinaryString(numeros[a]);
         }
 
-
         String ResultanteCerosUnos = "";
         for (String numbers : binario)
         {
             ResultanteCerosUnos += numbers;
-        }
-
-        // Guardo todos los posibles conbinacines de ceros y unos.
-        String[] PosiblesCodificaciones = new String[tabla.length];
-        int n = 0;
-        for (Estructura celda : tabla)
-        {
-            PosiblesCodificaciones[n] = celda.getCod();
-            n++;
         }
 
 
@@ -212,26 +190,23 @@ public class Descompresion extends Fragment {
 
         char[] Binario = ResultanteCerosUnos.toCharArray();
 
-        // ESTE ES UN EJEMPLO DE COMO IR A BUSCAR A TABLA EL CODIGO BINARIO PARA EXTRAER EL CARACTER CORRESPONDIENTE.
-
-            for (String numbers : binario)
+        String Resultante = "";
+        String temporal = "";
+        for (int a = 0; a < Binario.length-cerosAgregados; a++)
+        {
+            temporal += Character.toString(Binario[a]);
+            for (Estructura celda : tabla)
             {
-                for(int i = 0;i<= PosiblesCodificaciones.length; i++)
+                if (celda.getCod() == temporal)
                 {
-                    if (PosiblesCodificaciones[i] == numbers)
-                    {
-                        for (int a= 0; a<= tabla.length; a++)
-                        {
-                            if (numbers == tabla[a].getCod()) {
-                                CerosUnos.append(tabla[a].getCaracter());
-                            }
-                        }
-                    }
+                    Resultante += celda.getCaracter();
+                    temporal = "";
                 }
             }
+        }
 
 
-        return CerosUnos.toString();
+        return Resultante;
     }
 
     private void InOrdenEscritura (Node nodoAuxiliar, String codi)
