@@ -306,6 +306,21 @@ public class Huffman extends Fragment implements OnItemClickListener {
             Posicion++;
         }
 
+        String symbols = "";
+        for (int i=0;i<=Texto.length()-8;i +=8)
+
+        {
+
+            String bb = Texto.substring(i,i+8);
+
+            int ss = Integer.parseInt(bb, 2);
+
+            char cChar= (char) ss;
+
+            symbols+=cChar;
+
+        }
+
         String ListaRetorno = "";
         for (String item: ListadeBytes)
         {
@@ -313,7 +328,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
             ListaRetorno = ListaRetorno+Character.toString(Char);
         }
 
-        return ListaRetorno;
+        return symbols;
     }
 
     public List<String> EnviarNombres()
