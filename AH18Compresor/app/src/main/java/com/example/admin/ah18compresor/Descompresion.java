@@ -180,7 +180,17 @@ public class Descompresion extends Fragment {
         String ResultanteCerosUnos = "";
         for (String numbers : binario)
         {
-            ResultanteCerosUnos += numbers;
+            if (numbers.length() != 8)
+            {
+                for (int a = 0; a < 8-numbers.length(); a++)
+                    ResultanteCerosUnos += "0";
+
+                ResultanteCerosUnos += numbers;
+            }
+            else
+            {
+                ResultanteCerosUnos += numbers;
+            }
         }
 
 
@@ -197,14 +207,13 @@ public class Descompresion extends Fragment {
             temporal += Character.toString(Binario[a]);
             for (Estructura celda : tabla)
             {
-                if (celda.getCod() == temporal)
+                if (celda.getCod().equals(temporal))
                 {
                     Resultante += celda.getCaracter();
                     temporal = "";
                 }
             }
         }
-
 
         return Resultante;
     }
