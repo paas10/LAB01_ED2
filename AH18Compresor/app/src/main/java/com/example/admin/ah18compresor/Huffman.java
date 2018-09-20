@@ -97,7 +97,6 @@ public class Huffman extends Fragment implements OnItemClickListener {
             RutasArchivos.add(rutadirectorio);
         }
 
-        //Adaptador = new ArrayAdapter<String>(getActivity(),R.layout.fragment_huffman,R.id.RutaActual,NombresArchivos);
         final ArchivoAdapter Adaptador = new ArchivoAdapter(getActivity(), (ArrayList<String>) NombresArchivos);
         Lista.setAdapter(Adaptador);
     }
@@ -173,13 +172,12 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
 
     public void ConfirmarHuffman(File Archivo) {
-        Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y sera mostrado", Toast.LENGTH_SHORT);
+        Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y Podra Verlo", Toast.LENGTH_SHORT);
         t.show();
 
         ArchivoT = Archivo.toString();
 
         String Texto = LeerArchivo(Archivo);
-        //String Texto = "Tres tristes tigres";
 
         StringBuilder CodArchivo = new StringBuilder();
         StringBuilder CerosUnos = new StringBuilder();
@@ -457,7 +455,6 @@ public class Huffman extends Fragment implements OnItemClickListener {
                     bw.write(CerosAgregados+"|"+Cadena.toString());
                     bw.close();
                     Escribir.close();
-                    String Prueba = CerosAgregados+"|"+Cadena.toString();
                     Descompresion Envio = new Descompresion();
                     Envio.RecibirRuta(Ruta);
                 } catch (IOException ex) {

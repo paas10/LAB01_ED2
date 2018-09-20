@@ -13,8 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -214,7 +216,7 @@ public class Descompresion extends Fragment {
                 }
             }
         }
-
+        Escribir(Resultante);
         return Resultante;
     }
 
@@ -228,6 +230,25 @@ public class Descompresion extends Fragment {
             InOrdenEscritura(nodoAuxiliar.left, codi + "0");
             InOrdenEscritura(nodoAuxiliar.right, codi + "1");
         }
+    }
+
+    private void Escribir(String Cadena)
+    {
+
+        String Formato ="Descompreso";
+        File Temporal = new File(Ruta);
+        Ruta =Temporal.getPath().replace(".huff",Formato)+".huff";
+
+            File Archivo = new File(Ruta);
+            try {
+                FileWriter Escribir = new FileWriter(Archivo);
+                BufferedWriter bw = new BufferedWriter(Escribir);
+                bw.write(Cadena);
+                bw.close();
+                Escribir.close();
+            } catch (IOException ex) {
+                Toast.makeText(getActivity(), "No se Ha podido leer el archivo", Toast.LENGTH_SHORT).show();
+            }
     }
 }
 
