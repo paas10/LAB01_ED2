@@ -31,10 +31,10 @@ public class Descompresion extends Fragment {
 
         Texto = (TextView) view.findViewById(R.id.txtResultado);
         String ArchivoLeido = LeerArchivo();
-        Texto.setText(ArchivoLeido);
 
         String ArchivoDescompreso = "";
         ArchivoDescompreso = descompresión(ArchivoLeido);
+        Texto.setText(ArchivoDescompreso);
 
         return view;
     }
@@ -169,17 +169,24 @@ public class Descompresion extends Fragment {
 
         int [] numeros = new int[texto.length-contCaracter];
         int cont = 0;
+        String NumerodeCeros = "";
         for (int a = contCaracter; a < texto.length; a++)
         {
-            numeros[cont] = texto[a];
-            cont++;
+            if(Character.toString(texto[a]) != "_")
+            {
+                numeros[cont] = texto[a];
+                cont++;
+
+            }
         }
+        NumerodeCeros = Character.toString(texto[0]);
 
         String[] binario = new String[numeros.length];
         for (int a = 0; a < numeros.length; a++)
         {
-            binario[a] = Integer.toString(numeros[a]);
+                binario[a] = Integer.toBinaryString(numeros[a]);
         }
+
 
         String ResultanteCerosUnos = "";
         for (String numbers : binario)
@@ -193,6 +200,7 @@ public class Descompresion extends Fragment {
         for (Estructura celda : tabla)
         {
             PosiblesCodificaciones[n] = celda.getCod();
+            n++;
         }
 
 
@@ -202,26 +210,26 @@ public class Descompresion extends Fragment {
 
         char[] Binario = ResultanteCerosUnos.toCharArray();
 
-
-
         // ESTE ES UN EJEMPLO DE COMO IR A BUSCAR A TABLA EL CODIGO BINARIO PARA EXTRAER EL CARACTER CORRESPONDIENTE.
-        for (String numbers : binario)
-        {
-            boolean encontrado = false;
 
-            int conta = 0;
-            while (encontrado != true)
+            for (String numbers : binario)
             {
-                if(numbers == tabla[conta].getCod())
+                for(int i = 0;i<= PosiblesCodificaciones.length; i++)
                 {
-                    CerosUnos.append(tabla[conta].getCaracter());
-                    encontrado = true;
+                    if (PosiblesCodificaciones[i] == numbers)
+                    {
+                        for (int a= 0; a<= tabla.length; a++)
+                        {
+                            if (numbers == tabla[a].getCod()) {
+                                CerosUnos.append(tabla[a].getCaracter());
+                            }
+                        }
+                    }
                 }
-                conta++;
             }
-        }
 
-        return "";
+
+        return CerosUnos.toString();
     }
 
     private void InOrdenEscritura (Node nodoAuxiliar, String codi)
