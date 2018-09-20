@@ -174,9 +174,11 @@ public class Descompresion extends Fragment {
         {
             if(Character.toString(texto[a]) != "_")
             {
-                numeros[cont] = texto[a];
-                cont++;
-
+                if(Character.toString(texto[a]).contains("/") == false)
+                {
+                    numeros[cont] = texto[a];
+                    cont++;
+                }
             }
         }
         NumerodeCeros = Character.toString(texto[0]);
