@@ -66,7 +66,7 @@ public class Descompresion extends Fragment {
                 Linea = LeerArchivo.readLine();
                 while(Linea != null)
                 {
-                    Texto = Linea;
+                    Texto = Texto+Linea;
                     Linea= LeerArchivo.readLine();
                 }
                 LecturaArchivo.close();

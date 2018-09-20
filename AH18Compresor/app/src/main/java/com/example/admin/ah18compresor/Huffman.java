@@ -178,8 +178,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         ArchivoT = Archivo.toString();
 
-        //String Texto = LeerArchivo(Archivo);
-        String Texto = "Tres tristes tigres";
+        String Texto = LeerArchivo(Archivo);
+        //String Texto = "Tres tristes tigres";
 
         StringBuilder CodArchivo = new StringBuilder();
         StringBuilder CerosUnos = new StringBuilder();
@@ -308,7 +308,6 @@ public class Huffman extends Fragment implements OnItemClickListener {
 
         String symbols = "";
         for (int i=0;i<=Texto.length()-8;i +=8)
-
         {
 
             String bb = Texto.substring(i,i+8);
