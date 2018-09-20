@@ -18,13 +18,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //Ruta del Archivo
     String Ruta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +73,14 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         final int id = item.getItemId();
+        //Se Instancia el Fragment Manager
         android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
         //noinspection SimplifiableIfStatement
 
         if (id == R.id.action_settings) {
 
             final Huffman ExtraerDatos = new Huffman();
+            //Se Extraen los datos Leidos de la Estructura para fijarlos en la Actividad
             List<String> Lista = ExtraerDatos.EnviarNombres();
 
                 final String[] ListaNombres = new String[Lista.size()];
@@ -101,6 +108,7 @@ public class MainActivity extends AppCompatActivity
                         public void onClick(DialogInterface dialog, int item)
                         {
                             Toast.makeText(getApplicationContext(),"Has Elegido Guardar tus Compresiones en: " + ListaNombres[item], Toast.LENGTH_SHORT).show();
+                           //Se envian los datos a los Fragments
                             ExtraerDatos.RecibirRuta(ListaNombres[item]);
                             Ruta = ListaNombres[item];
                         }
@@ -145,10 +153,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        android.support.v4.app.FragmentManager fragmentManager=getSupportFragmentManager();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (id == R.id.nav_camera) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new Huffman()).commit();
+
         } else if (id == R.id.nav_gallery) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new LZW()).commit();
         } else if (id == R.id.nav_slideshow) {

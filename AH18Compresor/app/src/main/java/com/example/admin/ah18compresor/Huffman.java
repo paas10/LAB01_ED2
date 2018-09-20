@@ -57,6 +57,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
         return view;
     }
 
+    //Metodo en donde se recuperan los Directorios validos para mostrarlos
     private void VerDirectorio (String rutadirectorio)
     {
         NombresArchivos = new ArrayList<String>();
@@ -101,6 +102,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
         Lista.setAdapter(Adaptador);
     }
 
+    //Metodo en donde se lee el Archivo
     private String LeerArchivo (File Archivo)
     {
         String Texto = "";
@@ -251,7 +253,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
         Escribir(Prueba);
     }
 
-
+    //Metodo en donde se codifica la cadena de ceros y unos resultantes del arbol.
     private static String Codificar(String Texto)
     {
         List<String> ListadeBytes = new ArrayList<>();
@@ -321,6 +323,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
         return symbols;
     }
 
+    //Metodo en donde se envian los nombres de los directorios validos
     public List<String> EnviarNombres()
     {
             DirectorioRaiz = Environment.getExternalStorageDirectory().getPath();
@@ -359,13 +362,14 @@ public class Huffman extends Fragment implements OnItemClickListener {
             return NombresArchivos;
     }
 
+    //Metodo que recibe la ruta para guardar el archivo.
     public String RecibirRuta(String carpeta)
     {
         Carpeta = carpeta;
         return Carpeta;
     }
 
-
+    //Accion Resultante al presionar el boton cancelar al elegir la ruta
     public void CancelarHuffman() {
         Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();
     }
@@ -426,6 +430,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
         }
     }
 
+    //Metodo en donde se escribe el Archivo
     private void Escribir(StringBuilder Cadena)
     {
             MainActivity P = new MainActivity();

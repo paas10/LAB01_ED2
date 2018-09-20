@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.LinkedList;
 
 public class Descompresion extends Fragment {
 
+    //Ruta del Archivo
     static String Ruta;
     TextView Texto;
 
@@ -33,7 +35,7 @@ public class Descompresion extends Fragment {
 
         Texto = (TextView) view.findViewById(R.id.txtResultado);
         String ArchivoLeido = LeerArchivo();
-
+        Texto.setMovementMethod(new ScrollingMovementMethod());
         String ArchivoDescompreso = "";
         ArchivoDescompreso = descompresión(ArchivoLeido);
         Texto.setText(ArchivoDescompreso);
@@ -41,11 +43,13 @@ public class Descompresion extends Fragment {
         return view;
     }
 
+    //Metodo que recibe la ruta para escribir el archivo
     public void RecibirRuta(String ruta)
     {
         Ruta = ruta;
     }
 
+    //Metodo donde se lee el Archivo
     public String LeerArchivo()
     {
 
@@ -87,6 +91,7 @@ public class Descompresion extends Fragment {
         return "-1";
     }
 
+    //Metodo donde se descomprime el Archivo
     public String descompresión(String Texto)
     {
         char[] texto = Texto.toCharArray();
@@ -220,6 +225,7 @@ public class Descompresion extends Fragment {
         return Resultante;
     }
 
+    //Metodo donde se escriben los resultados del arbol en Inorden
     private void InOrdenEscritura (Node nodoAuxiliar, String codi)
     {
         if (nodoAuxiliar != null)
@@ -232,6 +238,7 @@ public class Descompresion extends Fragment {
         }
     }
 
+    //Metodo donde se escribe el texto
     private void Escribir(String Cadena)
     {
 
