@@ -21,7 +21,6 @@ public class ArchivoAdapter extends BaseAdapter {
         this.items = items;
     }
 
-
     public void clear() {
         items.clear();
     }
@@ -62,4 +61,6 @@ public class ArchivoAdapter extends BaseAdapter {
 
         return v;
     }
+
+
 }

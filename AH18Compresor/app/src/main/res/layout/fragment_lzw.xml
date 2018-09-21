@@ -8,4 +8,23 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Ruta"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:background="@color/colorAccent"
+            android:text="Ruta Actual"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/ListaVistaLZW"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </FrameLayout>

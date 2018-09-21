@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
 
             final Huffman ExtraerDatos = new Huffman();
+            final LZW LExtraerDatos = new LZW();
             //Se Extraen los datos Leidos de la Estructura para fijarlos en la Actividad
             List<String> Lista = ExtraerDatos.EnviarNombres();
 
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(),"Has Elegido Guardar tus Compresiones en: " + ListaNombres[item], Toast.LENGTH_SHORT).show();
                            //Se envian los datos a los Fragments
                             ExtraerDatos.RecibirRuta(ListaNombres[item]);
+                            LExtraerDatos.RecibirRuta(ListaNombres[item]);
                             Ruta = ListaNombres[item];
                         }
                     });
@@ -129,12 +131,17 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.MisCompresiones)
         {
-            Toast.makeText(getApplicationContext(),"Fragment en Construccion",Toast.LENGTH_LONG).show();
             fragmentManager.beginTransaction().replace(R.id.contenedor, new Mis_Compresiones()).commit();
         }
         else if (id == R.id.Descompresion)
         {
+            final Huffman ExtraerDatos = new Huffman();
+            final LZW LExtraerDatos = new LZW();
             if(Ruta == null)
+            {
+                Toast.makeText(getApplicationContext(),"No Hay Ningun Archivo Para Mostrar Aún",Toast.LENGTH_LONG).show();
+            }
+            else if(ExtraerDatos.Lista == null && LExtraerDatos.Lista == null)
             {
                 Toast.makeText(getApplicationContext(),"No Hay Ningun Archivo Para Mostrar Aún",Toast.LENGTH_LONG).show();
             }
@@ -163,7 +170,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new Bitacora()).commit();
         } else if (id == R.id.nav_manage) {
-
+            fragmentManager.beginTransaction().replace(R.id.contenedor, new Mis_Compresiones()).commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

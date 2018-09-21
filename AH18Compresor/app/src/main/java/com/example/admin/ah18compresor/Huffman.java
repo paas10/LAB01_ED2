@@ -12,10 +12,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import android.os.Environment;
 import android.widget.AdapterView;
@@ -41,6 +43,9 @@ public class Huffman extends Fragment implements OnItemClickListener {
     static String ArchivoT;
     static int Caracteres;
     static int Tamaño;
+    static List<Archivo> ListadeArchivos = new ArrayList<>();
+    String RutaAbsoluta;
+    String RutaCompresa;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -155,6 +160,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 Dialogo.setCancelable(false);
                 Dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo, int id) {
+                        RutaAbsoluta = archivo.toString();
                         ConfirmarHuffman(archivo);
                     }
                 });
@@ -177,7 +183,6 @@ public class Huffman extends Fragment implements OnItemClickListener {
             VerDirectorio(RutasArchivos.get(i));
         }
     }
-
 
     public void ConfirmarHuffman(File Archivo) {
         Toast t=Toast.makeText(getActivity(),"Dentro de un momento el archivo: "+Archivo.getName()+" Sera enviando al método de compresion de Huffman y Podra Verlo", Toast.LENGTH_SHORT);
@@ -358,7 +363,6 @@ public class Huffman extends Fragment implements OnItemClickListener {
         Toast.makeText(getActivity(), "Selecciona Otro Archivo para la Compresión Huffman",Toast.LENGTH_SHORT).show();
     }
 
-
     // Retorna una tabla con cada caracter y sus repeticiones en el texto.
     public LinkedList<Node> ObtenerCaracteresRepeticiones (String texto)
     {
@@ -438,6 +442,8 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 }
 
                 File Archivo = new File(Ruta);
+                RutaCompresa = Archivo.toString();
+                ListaDeArchivosCompresos();
                 try {
                     FileWriter Escribir = new FileWriter(Archivo);
                     BufferedWriter bw = new BufferedWriter(Escribir);
@@ -450,6 +456,25 @@ public class Huffman extends Fragment implements OnItemClickListener {
                     Toast.makeText(getActivity(), "No se Ha podido leer el archivo", Toast.LENGTH_SHORT).show();
                 }
             }
+    }
+
+    private void ListaDeArchivosCompresos()
+    {
+        File ArchivoOrginal = new File(RutaAbsoluta);
+        File ArchivoCompreso = new File(RutaCompresa);
+        Double RazondeCompresion;
+        Double FactordeCompresion;
+        Double PorcentajedeCompresion;
+
+        RazondeCompresion = Double.longBitsToDouble(ArchivoCompreso.length())/Double.longBitsToDouble(ArchivoOrginal.length());
+        FactordeCompresion = Double.longBitsToDouble(ArchivoOrginal.length())/Double.longBitsToDouble(ArchivoCompreso.length());
+        PorcentajedeCompresion = (Double.longBitsToDouble(ArchivoCompreso.length())*100)/Double.longBitsToDouble(ArchivoOrginal.length());
+
+        Archivo ArchivoNuevo = new Archivo(ArchivoOrginal.getName(),RutaCompresa,RazondeCompresion.toString(),FactordeCompresion.toString(),PorcentajedeCompresion.toString());
+        ListadeArchivos.add(ArchivoNuevo);
+
+        Mis_Compresiones miscompresiones = new Mis_Compresiones();
+        miscompresiones.RecibirDatos(ListadeArchivos);
     }
 
 }
