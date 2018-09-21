@@ -72,7 +72,16 @@ public class Descompresion extends Fragment {
                 Linea = LeerArchivo.readLine();
                 while(Linea != null)
                 {
-                    Texto = Texto+Linea;
+                    char[] FiltroSaltoLinea = Linea.toCharArray();
+
+                    for (char caracter : FiltroSaltoLinea)
+                    {
+                        if (caracter == 'λ')
+                            Texto += Character.toString('\n');
+                        else
+                            Texto += Character.toString(caracter);
+                    }
+
                     Linea= LeerArchivo.readLine();
                 }
                 LecturaArchivo.close();
@@ -96,21 +105,19 @@ public class Descompresion extends Fragment {
     {
         char[] texto = Texto.toCharArray();
 
-        StringBuilder CerosUnos = new StringBuilder();
-
         LinkedList<Node> Caracteres = new LinkedList<>();
         int cerosAgregados = Integer.parseInt(Character.toString(texto[0]));
 
         int contCaracter = 2;
         int contRepeticion = 4;
-        while (texto[contRepeticion] != '/' && texto[contCaracter] != '/')
+        while (texto[contRepeticion] != 'θ' && texto[contCaracter] != 'θ')
         {
             Node nuevo = new Node();
             nuevo.setCaracter(texto[contCaracter]);
 
             int aux = contRepeticion;
             String num = "";
-            while (texto[aux] != '_' && texto[aux] != '/')
+            while (texto[aux] != '_' && texto[aux] != 'θ')
             {
                 num += Character.toString(texto[aux]);
                 aux++;
@@ -122,7 +129,7 @@ public class Descompresion extends Fragment {
 
             contCaracter = aux + 1;
 
-            if (texto[aux] == '/')
+            if (texto[aux] == 'θ')
                 break;
 
             contCaracter = aux + 1;
@@ -200,10 +207,6 @@ public class Descompresion extends Fragment {
             }
         }
 
-
-        //YO ME HABIA EQUIVOCADO, AHORITA LO QUE HAY QUE HACER ES CONVERTIR EL STRING RESULTANTECEROSUNOS A UN charArray(); PARA
-        //IR SACANDO CARACTER POR CARACTER, EN CADA ITERACION SE TIENE QUE VERIFICAR SI LA CADENA CONCATENADA EXISTE EN LA CADENA DE
-        //STRING POSIBLESCODIFICACIONES, si existe en la cadena hay que ir a buscar a tabla para extraer el respectivo caracter.
 
         char[] Binario = ResultanteCerosUnos.toCharArray();
 

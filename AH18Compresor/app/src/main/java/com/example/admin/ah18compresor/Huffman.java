@@ -113,11 +113,17 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 LecturaArchivo = new FileReader(Archivo);
                 BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
                 String Linea="";
+                String SiguienteLinea="";
                 Linea = LeerArchivo.readLine();
                 while(Linea != null)
                 {
-                    Texto = Linea;
-                    Linea= LeerArchivo.readLine();
+                    SiguienteLinea = LeerArchivo.readLine();
+                    Texto += Linea;
+
+                    if (SiguienteLinea != null)
+                        Texto += "λ";
+
+                    Linea = SiguienteLinea;
                 }
                 LecturaArchivo.close();
                 LeerArchivo.close();
@@ -192,7 +198,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
             CodArchivo.append(Character.toString(i.getCaracter())+"_"+i.getNumero()+"_");
         }
 
-        CodArchivo.append("/");
+        CodArchivo.append("θ");
 
         //YA TENGO UNICAMENTE LOS CARACTERES CON LAS REPETICIONES
 
@@ -249,16 +255,15 @@ public class Huffman extends Fragment implements OnItemClickListener {
         }
 
         String Variable = CerosUnos.toString();
-        StringBuilder Prueba = CodArchivo.append(Codificar(Variable));
-        Escribir(Prueba);
+        StringBuilder Codificacion = CodArchivo.append(Codificar(Variable));
+        Escribir(Codificacion);
     }
 
     //Metodo en donde se codifica la cadena de ceros y unos resultantes del arbol.
     private static String Codificar(String Texto)
     {
         List<String> ListadeBytes = new ArrayList<>();
-        List<Character> ListadeBytesChar = new ArrayList<>();
-        List<Character> ListadeBytesExportados = new ArrayList<>();
+
         String Byte = "";
         char [] Cadena = Texto.toCharArray();
         int ContadorExterno = 0;
@@ -457,7 +462,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 try {
                     FileWriter Escribir = new FileWriter(Archivo);
                     BufferedWriter bw = new BufferedWriter(Escribir);
-                    bw.write(CerosAgregados+"|"+Cadena.toString());
+                    bw.write(CerosAgregados+"θ"+Cadena.toString());
                     bw.close();
                     Escribir.close();
                     Descompresion Envio = new Descompresion();
