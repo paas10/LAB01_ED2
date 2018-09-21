@@ -280,6 +280,9 @@ public class Huffman extends Fragment implements OnItemClickListener {
                 ContadorExterno++;
                 if(ContadorExterno == Cadena.length)
                 {
+                    Tamaño = 8-Byte.length();
+                    for (int a = 0; a < Tamaño; a++)
+                        Byte += "0";
                     ListadeBytes.add(Byte);
                 }
 
@@ -292,37 +295,13 @@ public class Huffman extends Fragment implements OnItemClickListener {
             }
         }
 
-        String Complemento = "";
-        int Posicion = 0;
-        Tamaño = (ListadeBytes.toArray().length*8);
-        for (String item: ListadeBytes)
-        {
-            if(item.length() != 8)
-            {
-                int caracteres = item.length();
-                int Iteraciones = 8-caracteres;
-                for(int i = 1; i<= Iteraciones;i++)
-                {
-                    Complemento = Complemento + "0";
-                }
-                item = item+Complemento;
-                ListadeBytes.set(Posicion, item);
-            }
-            Posicion++;
-        }
-
         String symbols = "";
-        for (int i=0;i<=Texto.length()-8;i +=8)
+
+        for (String Bite : ListadeBytes)
         {
-
-            String bb = Texto.substring(i,i+8);
-
-            int ss = Integer.parseInt(bb, 2);
-
+            int ss = Integer.parseInt(Bite, 2);
             char cChar= (char) ss;
-
             symbols+=cChar;
-
         }
 
         return symbols;
@@ -444,7 +423,7 @@ public class Huffman extends Fragment implements OnItemClickListener {
             String Ruta = "";
             File ArchivoNuevo = new File(ArchivoT);
             String Formato = "/"+ArchivoNuevo.getName().replace(".txt",".huff");
-            int CerosAgregados = Tamaño-Caracteres;
+            int CerosAgregados = Tamaño;
 
             if(Carpeta == null)
             {
