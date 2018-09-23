@@ -15,12 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -185,5 +188,53 @@ public class LZW extends Fragment implements OnItemClickListener {
         return Carpeta;
     }
 
+
+    private String CompresionLZW (String Texto) {
+        Procesos procesos = new Procesos();
+
+        HashMap Caracteres = new HashMap();
+        char[] TextoSeccionado = Texto.toCharArray();
+        String Codificacion = "";
+
+        // SE OBTIENEN TODOS LOS CARACTERES DEL TEXTO UNA VEZ
+        char[] CaracteresSinRepeticion = procesos.CadenaSinRepeticion(TextoSeccionado);
+        int contKey = 1;
+
+        // SE INGRESAN ESOS CARACTERES EN UN DICCIONARIO
+        for (char caracter : CaracteresSinRepeticion)
+        {
+            Caracteres.put(caracter, contKey);
+            contKey++;
+        }
+
+        for (int i = 0; i < TextoSeccionado.length; i++)
+        {
+            String TextoCodificar = Character.toString(TextoSeccionado[i]);
+
+            // SE VERIFICA HASTA QUE CARACTER SE TIENE QUE AGREGAR AL DICCIONARIO
+            int aux = i;
+            while (Caracteres.containsKey(TextoCodificar))
+            {
+                aux++;
+                TextoCodificar += Character.toString(TextoSeccionado[aux]);
+            }
+
+            Caracteres.put(TextoCodificar, contKey);
+            contKey++;
+
+            // SE CONCATENAN TODOS LOS CHAR QUE SE VAN A CODIFICAR
+            String concat = "";
+            for (int j = i; j < aux; j++)
+            {
+                concat += Character.toString(TextoSeccionado[j]);
+            }
+
+            Codificacion += Caracteres.get(concat);
+
+            i = aux;
+        }
+
+        return Codificacion;
+    }
 
 }

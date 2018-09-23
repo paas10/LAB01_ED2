@@ -1,5 +1,6 @@
 package com.example.admin.ah18compresor;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Procesos {
@@ -47,6 +48,30 @@ public class Procesos {
         }while(Desordenada.size() != 0);
 
         return Ordenada;
+    }
+
+
+    // METODO QUE REVISA SI LA COMBINACION ENVIADA YA EXISTE EN EL DICCIONARIO
+    public boolean Existe (HashMap Diccionario, String Combinacion)
+    {
+        boolean Existe = false;
+        int limite = Diccionario.size();
+
+        for (int i = 1; i <= limite; i++)
+        {
+            try
+            {
+                if (Diccionario.get(i).toString() == Combinacion)
+                    Existe = true;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+        }
+
+        return Existe;
     }
 
 
