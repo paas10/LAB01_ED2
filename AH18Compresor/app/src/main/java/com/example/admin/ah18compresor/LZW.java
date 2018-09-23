@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -43,6 +44,7 @@ public class LZW extends Fragment implements OnItemClickListener {
     String RutaAbsoluta;
     String RutaCompresa;
 
+    //Cree el Metodo ConfirmarLZW donde se obtiene el String Leido y se Envia a tu Método, asi como en Huffman
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -143,6 +145,14 @@ public class LZW extends Fragment implements OnItemClickListener {
         return "-1";
     }
 
+    public void ConfirmarLZW(File Archivo) {
+        Toast t = Toast.makeText(getActivity(), "Dentro de un momento el archivo: " + Archivo.getName() + " Sera enviando al método de compresion de Huffman y Podra Verlo", Toast.LENGTH_SHORT);
+        t.show();
+        ArchivoT = Archivo.toString();
+        String Texto = LeerArchivo(Archivo);
+        CompresionLZW(Texto);
+    }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -158,7 +168,7 @@ public class LZW extends Fragment implements OnItemClickListener {
                 Dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo, int id) {
                         RutaAbsoluta = archivo.toString();
-                        //ConfirmarLZW(archivo);
+                        ConfirmarLZW(archivo);
                     }
                 });
                 Dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
