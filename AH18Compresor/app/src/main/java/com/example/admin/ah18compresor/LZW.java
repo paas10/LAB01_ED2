@@ -146,11 +146,11 @@ public class LZW extends Fragment implements OnItemClickListener {
     }
 
     public void ConfirmarLZW(File Archivo) {
-        Toast t = Toast.makeText(getActivity(), "Dentro de un momento el archivo: " + Archivo.getName() + " Sera enviando al método de compresion de Huffman y Podra Verlo", Toast.LENGTH_SHORT);
+        Toast t = Toast.makeText(getActivity(), "Dentro de un momento el archivo: " + Archivo.getName() + " Sera enviando al método de compresion de LZW y Podra Verlo", Toast.LENGTH_SHORT);
         t.show();
         ArchivoT = Archivo.toString();
         String Texto = LeerArchivo(Archivo);
-        CompresionLZW(Texto);
+        String Compresion = CompresionLZW(Texto);
     }
 
     @Override
@@ -213,7 +213,7 @@ public class LZW extends Fragment implements OnItemClickListener {
         // SE INGRESAN ESOS CARACTERES EN UN DICCIONARIO
         for (char caracter : CaracteresSinRepeticion)
         {
-            Caracteres.put(caracter, contKey);
+            Caracteres.put(String.valueOf(caracter), contKey);
             contKey++;
         }
 
@@ -223,14 +223,22 @@ public class LZW extends Fragment implements OnItemClickListener {
 
             // SE VERIFICA HASTA QUE CARACTER SE TIENE QUE AGREGAR AL DICCIONARIO
             int aux = i;
-            while (Caracteres.containsKey(TextoCodificar))
-            {
-                aux++;
-                TextoCodificar += Character.toString(TextoSeccionado[aux]);
-            }
 
-            Caracteres.put(TextoCodificar, contKey);
-            contKey++;
+            try
+            {
+                while (Caracteres.containsKey(TextoCodificar))
+                {
+                    aux++;
+                    TextoCodificar += Character.toString(TextoSeccionado[aux]);
+                }
+
+                Caracteres.put(TextoCodificar, contKey);
+                contKey++;
+            }
+            catch (Exception e)
+            {
+
+            }
 
             // SE CONCATENAN TODOS LOS CHAR QUE SE VAN A CODIFICAR
             String concat = "";
@@ -241,7 +249,7 @@ public class LZW extends Fragment implements OnItemClickListener {
 
             Codificacion += Caracteres.get(concat);
 
-            i = aux;
+            i = aux-1;
         }
 
         return Codificacion;
