@@ -129,24 +129,34 @@ public class MainActivity extends AppCompatActivity
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-        } else if (id == R.id.MisCompresiones)
+        } else if (id == R.id.DescompresionLZW)
         {
-            fragmentManager.beginTransaction().replace(R.id.contenedor, new Mis_Compresiones()).commit();
-        }
-        else if (id == R.id.Descompresion)
-        {
-            final Huffman ExtraerDatos = new Huffman();
-            final LZW LExtraerDatos = new LZW();
+            final Descompresionlzw LExtraerDatos = new Descompresionlzw();
             if(Ruta == null)
             {
                 Toast.makeText(getApplicationContext(),"No Hay Ningun Archivo Para Mostrar Aún",Toast.LENGTH_LONG).show();
             }
-            else if(ExtraerDatos.Lista == null && LExtraerDatos.Lista == null)
+            else if(LExtraerDatos.Ruta == null)
             {
                 Toast.makeText(getApplicationContext(),"No Hay Ningun Archivo Para Mostrar Aún",Toast.LENGTH_LONG).show();
             }
             else {
-                Descompresion EnviodeDatos = new Descompresion();
+                fragmentManager.beginTransaction().replace(R.id.contenedor, new Descompresionlzw()).commit();
+            }
+
+        }
+        else if (id == R.id.Descompresion)
+        {
+            final Descompresion ExtraerDatos = new Descompresion();
+            if(Ruta == null)
+            {
+                Toast.makeText(getApplicationContext(),"No Hay Ningun Archivo Para Mostrar Aún",Toast.LENGTH_LONG).show();
+            }
+            else if(ExtraerDatos.Ruta == null)
+            {
+                Toast.makeText(getApplicationContext(),"No Hay Ningun Archivo Para Mostrar Aún",Toast.LENGTH_LONG).show();
+            }
+            else {
                 fragmentManager.beginTransaction().replace(R.id.contenedor, new Descompresion()).commit();
             }
         }
@@ -168,9 +178,19 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new LZW()).commit();
         } else if (id == R.id.nav_slideshow) {
-            fragmentManager.beginTransaction().replace(R.id.contenedor, new Bitacora()).commit();
+            final Bitacora Recuperar = new Bitacora();
+                fragmentManager.beginTransaction().replace(R.id.contenedor, new Bitacora()).commit();
+
         } else if (id == R.id.nav_manage) {
-            fragmentManager.beginTransaction().replace(R.id.contenedor, new Mis_Compresiones()).commit();
+
+            final Mis_Compresiones Recuperar = new Mis_Compresiones();
+            if(Recuperar.ListadeArchivosCompresos == null)
+            {
+                Toast.makeText(getApplicationContext(),"No Hay Ningun Archivo Para Mostrar Aún",Toast.LENGTH_LONG).show();
+            }
+            else {
+                fragmentManager.beginTransaction().replace(R.id.contenedor, new Mis_Compresiones()).commit();
+            }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

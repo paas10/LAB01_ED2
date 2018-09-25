@@ -18,8 +18,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +61,6 @@ public class LZW extends Fragment implements OnItemClickListener {
 
         return view;
     }
-
 
     //Metodo en donde se recuperan los Directorios validos para mostrarlos
     private void VerDirectorio (String rutadirectorio)
@@ -198,7 +199,6 @@ public class LZW extends Fragment implements OnItemClickListener {
         return Carpeta;
     }
 
-
     private String CompresionLZW (String Texto) {
         Procesos procesos = new Procesos();
 
@@ -253,6 +253,64 @@ public class LZW extends Fragment implements OnItemClickListener {
         }
 
         return Codificacion;
+    }
+
+    //Metodo en donde se escribe el Archivo
+    private void Escribir(StringBuilder Cadena)
+    {
+        MainActivity P = new MainActivity();
+        File directorioactual = new File(DirectorioRaiz);
+        File[] ListadeArchivos = directorioactual.listFiles();
+        String Ruta = "";
+        File ArchivoNuevo = new File(ArchivoT);
+        String Formato = "/"+ArchivoNuevo.getName().replace(".txt",".LZW");
+
+        if(Carpeta == null)
+        {
+            Toast.makeText(getActivity(), "No hay Ningun Archivo para Escribir Aún", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            for (File item : ListadeArchivos) {
+                if (item.toString().contains(Carpeta) == true) {
+                    Ruta = item.getAbsolutePath();
+                    Ruta = Ruta + Formato;
+                }
+            }
+
+            File Archivo = new File(Ruta);
+            RutaCompresa = Archivo.toString();
+            ListaDeArchivosCompresos();
+            try {
+                FileWriter Escribir = new FileWriter(Archivo);
+                BufferedWriter bw = new BufferedWriter(Escribir);
+                bw.write(Cadena.toString());
+                bw.close();
+                Escribir.close();
+                Descompresion Envio = new Descompresion();
+                Envio.RecibirRuta(Ruta);
+            } catch (IOException ex) {
+                Toast.makeText(getActivity(), "No se Ha podido leer el archivo", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void ListaDeArchivosCompresos()
+    {
+        File ArchivoOrginal = new File(RutaAbsoluta);
+        File ArchivoCompreso = new File(RutaCompresa);
+        Double RazondeCompresion;
+        Double FactordeCompresion;
+        Double PorcentajedeCompresion;
+
+        RazondeCompresion = Double.longBitsToDouble(ArchivoCompreso.length())/Double.longBitsToDouble(ArchivoOrginal.length());
+        FactordeCompresion = Double.longBitsToDouble(ArchivoOrginal.length())/Double.longBitsToDouble(ArchivoCompreso.length());
+        PorcentajedeCompresion = (Double.longBitsToDouble(ArchivoCompreso.length())*100)/Double.longBitsToDouble(ArchivoOrginal.length());
+
+        Archivo ArchivoNuevo = new Archivo(ArchivoOrginal.getName(),RutaCompresa,RazondeCompresion.toString(),FactordeCompresion.toString(),PorcentajedeCompresion.toString());
+        ListadeArchivos.add(ArchivoNuevo);
+
+        Mis_Compresiones miscompresiones = new Mis_Compresiones();
+        miscompresiones.RecibirDatos(ListadeArchivos);
     }
 
 }

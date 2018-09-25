@@ -18,6 +18,8 @@ public class Mis_Compresiones extends Fragment {
 
 
     static List<Archivo> ListadeArchivosCompresos;
+    static List<Archivo> ListadeArchivosCompresoshuff = new ArrayList<>();
+    static List<Archivo> ListadeArchivosCompresoslzw = new ArrayList<>();
     ListView Lista;
 
     @Override
@@ -33,7 +35,44 @@ public class Mis_Compresiones extends Fragment {
 
     public void RecibirDatos(List<Archivo> ListadeArchivos)
     {
-        ListadeArchivosCompresos = ListadeArchivos;
+
+        List<Archivo> ListaAuxiliar = new ArrayList<>();
+        if(ListadeArchivos.get(0).getRuta().contains(".huff") == true)
+        {
+                ListadeArchivosCompresoshuff = ListadeArchivos;
+        }
+        else if (ListadeArchivos.get(0).getRuta().contains(".LZW") == true)
+        {
+            ListadeArchivosCompresoslzw = ListadeArchivos;
+        }
+
+        if (ListadeArchivosCompresoshuff != null && ListadeArchivosCompresoslzw != null)
+        {
+            for (Archivo item: ListadeArchivosCompresoshuff)
+            {
+                ListaAuxiliar.add(item);
+            }
+
+            for (Archivo item: ListadeArchivosCompresoshuff)
+            {
+                ListaAuxiliar.add(item);
+            }
+
+        }
+        else if (ListadeArchivosCompresoshuff == null)
+        {
+            ListadeArchivosCompresos = ListadeArchivosCompresoslzw;
+        }
+        else if (ListadeArchivosCompresoslzw == null)
+        {
+            ListadeArchivosCompresos = ListadeArchivosCompresoshuff;
+        }
+
+        ListadeArchivosCompresos = ListaAuxiliar;
+        Bitacora Envio = new Bitacora();
+        Envio.RecibirDatos(ListadeArchivosCompresos);
+
     }
+
 
 }

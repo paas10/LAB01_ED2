@@ -7,13 +7,13 @@
         android:title="Seleccionar Ruta"
         app:showAsAction="withText" />
     <item
-        android:id="@+id/MisCompresiones"
+        android:id="@+id/DescompresionLZW"
         android:orderInCategory="100"
-        android:title="Mis Compresiones"
+        android:title="Ver Archivo Descompreso .LZW"
         app:showAsAction="withText" />
     <item
         android:id="@+id/Descompresion"
         android:orderInCategory="100"
-        android:title="Ver Archivo Descompreso"
+        android:title="Ver Archivo Descompreso .Huff"
         app:showAsAction="withText" />
 </menu>

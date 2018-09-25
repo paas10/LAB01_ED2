@@ -25,7 +25,7 @@ import java.util.LinkedList;
 public class Descompresion extends Fragment {
 
     //Ruta del Archivo
-    static String Ruta;
+    public static String Ruta;
     TextView Texto;
 
     @Override
