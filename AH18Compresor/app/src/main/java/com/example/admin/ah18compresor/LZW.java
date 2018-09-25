@@ -2,6 +2,7 @@ package com.example.admin.ah18compresor;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.icu.text.UnicodeSet;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -152,6 +153,11 @@ public class LZW extends Fragment implements OnItemClickListener {
         ArchivoT = Archivo.toString();
         String Texto = LeerArchivo(Archivo);
         String Compresion = CompresionLZW(Texto);
+
+        StringBuilder texto = new StringBuilder();
+        texto.append(Compresion);
+
+        Escribir(texto);
     }
 
     @Override
@@ -204,6 +210,7 @@ public class LZW extends Fragment implements OnItemClickListener {
 
         HashMap Caracteres = new HashMap();
         char[] TextoSeccionado = Texto.toCharArray();
+        String Encabezado = "";
         String Codificacion = "";
 
         // SE OBTIENEN TODOS LOS CARACTERES DEL TEXTO UNA VEZ
@@ -214,8 +221,10 @@ public class LZW extends Fragment implements OnItemClickListener {
         for (char caracter : CaracteresSinRepeticion)
         {
             Caracteres.put(String.valueOf(caracter), contKey);
+            Encabezado += "|" + caracter + "," + contKey;
             contKey++;
         }
+        Encabezado += "θ";
 
         for (int i = 0; i < TextoSeccionado.length; i++)
         {
@@ -247,12 +256,15 @@ public class LZW extends Fragment implements OnItemClickListener {
                 concat += Character.toString(TextoSeccionado[j]);
             }
 
-            Codificacion += Caracteres.get(concat);
+            int toUnicode = (int) Caracteres.get(concat);
+            char unicode = (char) toUnicode;
+
+            Codificacion += unicode;
 
             i = aux-1;
         }
 
-        return Codificacion;
+        return Encabezado+Codificacion;
     }
 
     //Metodo en donde se escribe el Archivo
@@ -286,7 +298,7 @@ public class LZW extends Fragment implements OnItemClickListener {
                 bw.write(Cadena.toString());
                 bw.close();
                 Escribir.close();
-                Descompresion Envio = new Descompresion();
+                Descompresionlzw Envio = new Descompresionlzw();
                 Envio.RecibirRuta(Ruta);
             } catch (IOException ex) {
                 Toast.makeText(getActivity(), "No se Ha podido leer el archivo", Toast.LENGTH_SHORT).show();

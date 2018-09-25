@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 
@@ -101,8 +102,82 @@ public class Descompresionlzw extends Fragment {
     //Metodo donde se descomprime el Archivo
     public String descompresión(String Texto) {
 
-        Escribir("");
-        return "";
+        char[] texto = Texto.toCharArray();
+
+        HashMap CaracteresL = new HashMap();
+        HashMap CaracteresN = new HashMap();
+
+        int ContadorLimite = 0;
+        while (texto[ContadorLimite] != 'θ')
+            ContadorLimite++;
+
+        for (int i = 1; i < ContadorLimite; i += 4)
+        {
+            CaracteresN.put(Integer.parseInt(Character.toString(texto[i+2])), String.valueOf(texto[i]));
+            CaracteresL.put(String.valueOf(texto[i]), Integer.parseInt(Character.toString(texto[i+2])));
+        }
+
+        int CaracteresOriginales = CaracteresL.size();
+        int contKey = CaracteresL.size() + 1;
+
+        // Codificacion separada del encabezado
+        String TextoSeparado = Texto.substring(ContadorLimite + 1, Texto.length());
+
+        // cadena con cada caracter codificado
+        char[] TextoSeccionado = TextoSeparado.toCharArray();
+
+        int [] Numeros = new int[TextoSeccionado.length];
+
+        // Se convierte de Unicode a int
+        for (int i = 0; i < TextoSeccionado.length; i++)
+        {
+            Numeros[i] = (int)TextoSeccionado[i];
+        }
+
+        String Original = "";
+
+        // Se decodifican los caracteres originales
+        for (int i = 0; i < CaracteresOriginales; i++)
+        {
+            Original += (String) CaracteresN.get(Numeros[i]);
+        }
+
+        // Se decodifica y a la vez se amplia el diccionario
+        for (int i = 0; i < Numeros.length; i++)
+        {
+            char[] TextoExistente = Original.toCharArray();
+            String TextoDecodificar = Character.toString(TextoExistente[i]);
+
+            // SE VERIFICA HASTA QUE CARACTER SE TIENE QUE AGREGAR AL DICCIONARIO
+            int aux = i;
+
+            try
+            {
+                while (CaracteresL.containsKey(TextoDecodificar))
+                {
+                    aux++;
+                    TextoDecodificar += Character.toString(TextoExistente[aux]);
+                }
+
+                CaracteresN.put(contKey, TextoDecodificar);
+                CaracteresL.put(TextoDecodificar, contKey);
+                contKey++;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            // SE DECODIFICA EL CARACTER CORRESPONDIENTE AL TEXTO ORIGINAL.
+            if (i+CaracteresOriginales < Numeros.length)
+                Original += (String) CaracteresN.get(Numeros[i+CaracteresOriginales]);
+
+            i = aux-1;
+        }
+
+
+        Escribir(Original);
+        return Original;
     }
 
     //Metodo donde se escribe el texto
