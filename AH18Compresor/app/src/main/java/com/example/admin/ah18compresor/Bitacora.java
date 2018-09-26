@@ -70,7 +70,7 @@ public class Bitacora extends Fragment {
             Rutai = Rutai.replace(Nombre,"Bitacora.txt");
 
             Archivo = new File(Rutai);
-            FileWriter Escribir = new FileWriter(Archivo);
+            FileWriter Escribir = new FileWriter(Archivo, true);
             BufferedWriter bw = new BufferedWriter(Escribir);
             for (Archivo item: ListadeArchivosCompresos)
             {
@@ -89,6 +89,43 @@ public class Bitacora extends Fragment {
         {
             if(ListadeArchivosCompresos == null)
             {
+                List<String> Datos = new ArrayList<>();
+                FileReader LecturaArchivo = new FileReader(Ruta);
+                BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
+                String Linea="";
+                Linea = LeerArchivo.readLine();
+                while(Linea != null)
+                {
+                    Datos.add(Linea);
+                    Linea = LeerArchivo.readLine();
+                }
+                LecturaArchivo.close();
+                LeerArchivo.close();
+
+                List<Archivo> ListaAux = new ArrayList<>();
+                for (String item: Datos)
+                {
+                    String [] Auxiliar = item.split("ƒ");
+
+                    Archivo AuxArchivo = new Archivo(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4]);
+                    ListaAux.add(AuxArchivo);
+                }
+
+                ListadeArchivosCompresos = ListaAux;
+            }
+            else
+            {
+                Archivo = new File(Ruta);
+                FileWriter Escribir = new FileWriter(Archivo, true);
+                BufferedWriter bw = new BufferedWriter(Escribir);
+                for (Archivo item: ListadeArchivosCompresos)
+                {
+                    bw.write(item.getNombre()+"ƒ"+item.getRuta()+"ƒ"+item.getRazon()+"ƒ"+item.getFactor()+"ƒ"+item.getPorcentaje());
+                    bw.newLine();
+                }
+                bw.close();
+                Escribir.close();
+
                 List<String> Datos = new ArrayList<>();
                 FileReader LecturaArchivo = new FileReader(Ruta);
                 BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);

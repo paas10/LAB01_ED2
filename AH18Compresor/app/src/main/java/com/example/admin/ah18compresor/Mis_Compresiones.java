@@ -53,7 +53,7 @@ public class Mis_Compresiones extends Fragment {
                 ListaAuxiliar.add(item);
             }
 
-            for (Archivo item: ListadeArchivosCompresoshuff)
+            for (Archivo item: ListadeArchivosCompresoslzw)
             {
                 ListaAuxiliar.add(item);
             }
