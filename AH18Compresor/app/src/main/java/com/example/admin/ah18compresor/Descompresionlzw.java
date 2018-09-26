@@ -75,7 +75,7 @@ public class Descompresionlzw extends Fragment {
 
                         for (char caracter : FiltroSaltoLinea)
                         {
-                            if (caracter == 'λ')
+                            if (caracter == '%')
                                 Texto += Character.toString('\n');
                             else
                                 Texto += Character.toString(caracter);
@@ -186,8 +186,12 @@ public class Descompresionlzw extends Fragment {
             }
 
             // SE DECODIFICA EL CARACTER CORRESPONDIENTE AL TEXTO ORIGINAL.
-            if (TurnoDecodificar < Numeros.length)
+
+            // LO COMENTADO AYUDA A CHEQUEAR EN DONDE TRUENA
+            //if(CaracteresN.get(Numeros[TurnoDecodificar]) != null)
                 Original += (String) CaracteresN.get(Numeros[TurnoDecodificar]);
+            //else
+            //    TurnoDecodificar--;
 
             i = aux-1;
             TurnoDecodificar++;

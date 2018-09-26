@@ -127,7 +127,7 @@ public class LZW extends Fragment implements OnItemClickListener {
                     Texto += Linea;
 
                     if (SiguienteLinea != null)
-                        Texto += "λ";
+                        Texto += "%";
 
                     Linea = SiguienteLinea;
                 }
@@ -263,6 +263,18 @@ public class LZW extends Fragment implements OnItemClickListener {
 
             i = aux-1;
         }
+
+        /*
+        int [] Numeros = new int[Codificacion.length()];
+        char [] codiprueba = Codificacion.toCharArray();
+
+
+        // Se convierte de Unicode a int
+        for (int i = 0; i < TextoSeccionado.length; i++)
+        {
+            Numeros[i] = (int)codiprueba[i];
+        }
+        */
 
         return Encabezado+Codificacion;
     }
