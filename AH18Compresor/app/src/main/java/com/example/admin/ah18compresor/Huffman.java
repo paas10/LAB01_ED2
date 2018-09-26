@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -466,9 +467,11 @@ public class Huffman extends Fragment implements OnItemClickListener {
         Double FactordeCompresion;
         Double PorcentajedeCompresion;
 
-        RazondeCompresion = Double.longBitsToDouble(ArchivoCompreso.length())/Double.longBitsToDouble(ArchivoOrginal.length());
-        FactordeCompresion = Double.longBitsToDouble(ArchivoOrginal.length())/Double.longBitsToDouble(ArchivoCompreso.length());
-        PorcentajedeCompresion = (Double.longBitsToDouble(ArchivoCompreso.length())*100)/Double.longBitsToDouble(ArchivoOrginal.length());
+        Double R1 = Double.longBitsToDouble(ArchivoCompreso.length());
+        Double R2 = Double.longBitsToDouble(ArchivoOrginal.length());
+        RazondeCompresion = R1/R2;
+        FactordeCompresion = R2/R1;
+        PorcentajedeCompresion = ((R1*100)/R2);
 
         Archivo ArchivoNuevo = new Archivo(ArchivoOrginal.getName(),RutaCompresa,RazondeCompresion.toString(),FactordeCompresion.toString(),PorcentajedeCompresion.toString());
         ListadeArchivos.add(ArchivoNuevo);
