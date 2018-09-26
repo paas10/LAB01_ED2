@@ -159,6 +159,9 @@ public class Descompresionlzw extends Fragment {
         // VARIABLE QUE LLEVA EL CONTROL DE QUE NUMERO DEBE SER DESCOMPRESO
         int TurnoDecodificar = 2;
 
+        // Caso especial
+        String anterior = "";
+
         // Se decodifica y a la vez se amplia el diccionario
         for (int i = 0; TurnoDecodificar < Numeros.length; i++)
         {
@@ -188,10 +191,17 @@ public class Descompresionlzw extends Fragment {
             // SE DECODIFICA EL CARACTER CORRESPONDIENTE AL TEXTO ORIGINAL.
 
             // LO COMENTADO AYUDA A CHEQUEAR EN DONDE TRUENA
-            //if(CaracteresN.get(Numeros[TurnoDecodificar]) != null)
+            if(CaracteresN.get(Numeros[TurnoDecodificar]) != null)
+            {
                 Original += (String) CaracteresN.get(Numeros[TurnoDecodificar]);
-            //else
-            //    TurnoDecodificar--;
+
+                String auxiliar = (String) CaracteresN.get(Numeros[TurnoDecodificar]);
+                anterior = (String) CaracteresN.get(Numeros[TurnoDecodificar]) + auxiliar.charAt(0);
+            }
+            else
+            {
+                Original += anterior;
+            }
 
             i = aux-1;
             TurnoDecodificar++;
