@@ -215,7 +215,7 @@ public class LZW extends Fragment implements OnItemClickListener {
 
         // SE OBTIENEN TODOS LOS CARACTERES DEL TEXTO UNA VEZ
         char[] CaracteresSinRepeticion = procesos.CadenaSinRepeticion(TextoSeccionado);
-        int contKey = 1;
+        int contKey = 161;
 
         // SE INGRESAN ESOS CARACTERES EN UN DICCIONARIO
         for (char caracter : CaracteresSinRepeticion)

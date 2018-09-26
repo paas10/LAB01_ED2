@@ -113,12 +113,26 @@ public class Descompresionlzw extends Fragment {
 
         for (int i = 1; i < ContadorLimite; i += 4)
         {
-            CaracteresN.put(Integer.parseInt(Character.toString(texto[i+2])), String.valueOf(texto[i]));
-            CaracteresL.put(String.valueOf(texto[i]), Integer.parseInt(Character.toString(texto[i+2])));
+            int j = i+3;
+            int extension = 0;
+            while(texto[j] != '|' && texto[j] != 'θ')
+            {
+                j++;
+                extension++;
+            }
+
+            String concat = "";
+            for(int a = i+2; a < j; a++)
+                concat += Character.toString(texto[a]);
+
+            CaracteresN.put(Integer.parseInt(concat), String.valueOf(texto[i]));
+            CaracteresL.put(String.valueOf(texto[i]), Integer.parseInt(concat));
+
+            i += extension;
         }
 
         int CaracteresOriginales = CaracteresL.size();
-        int contKey = CaracteresL.size() + 1;
+        int contKey = CaracteresL.size() + 161;
 
         // Codificacion separada del encabezado
         String TextoSeparado = Texto.substring(ContadorLimite + 1, Texto.length());
@@ -136,14 +150,17 @@ public class Descompresionlzw extends Fragment {
 
         String Original = "";
 
-        // Se decodifican los caracteres originales
-        for (int i = 0; i < CaracteresOriginales; i++)
+        // Se decodifican los primeros dos caracteres para poder comenzar a agregar al diccionario
+        for (int i = 0; i < 2; i++)
         {
             Original += (String) CaracteresN.get(Numeros[i]);
         }
 
+        // VARIABLE QUE LLEVA EL CONTROL DE QUE NUMERO DEBE SER DESCOMPRESO
+        int TurnoDecodificar = 2;
+
         // Se decodifica y a la vez se amplia el diccionario
-        for (int i = 0; i < Numeros.length; i++)
+        for (int i = 0; TurnoDecodificar < Numeros.length; i++)
         {
             char[] TextoExistente = Original.toCharArray();
             String TextoDecodificar = Character.toString(TextoExistente[i]);
@@ -169,10 +186,11 @@ public class Descompresionlzw extends Fragment {
             }
 
             // SE DECODIFICA EL CARACTER CORRESPONDIENTE AL TEXTO ORIGINAL.
-            if (i+CaracteresOriginales < Numeros.length)
-                Original += (String) CaracteresN.get(Numeros[i+CaracteresOriginales]);
+            if (TurnoDecodificar < Numeros.length)
+                Original += (String) CaracteresN.get(Numeros[TurnoDecodificar]);
 
             i = aux-1;
+            TurnoDecodificar++;
         }
 
 
