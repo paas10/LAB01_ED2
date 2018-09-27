@@ -75,7 +75,7 @@ public class Descompresionlzw extends Fragment {
 
                         for (char caracter : FiltroSaltoLinea)
                         {
-                            if (caracter == '%')
+                            if (caracter == '~')
                                 Texto += Character.toString('\n');
                             else
                                 Texto += Character.toString(caracter);

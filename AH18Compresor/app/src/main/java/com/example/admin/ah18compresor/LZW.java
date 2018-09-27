@@ -127,7 +127,7 @@ public class LZW extends Fragment implements OnItemClickListener {
                     Texto += Linea;
 
                     if (SiguienteLinea != null)
-                        Texto += "%";
+                        Texto += "~";
 
                     Linea = SiguienteLinea;
                 }
