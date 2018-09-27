@@ -53,7 +53,7 @@ public class Bitacora extends Fragment {
 
        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
        String Ruta = myPreferences.getString("Ruta","unknown");
-        if(Ruta == null)
+        if(Ruta == "unknown")
         {
             String Nombre = ListadeArchivosCompresos.get(0).getNombre();
             String Rutai = ListadeArchivosCompresos.get(0).getRuta();
